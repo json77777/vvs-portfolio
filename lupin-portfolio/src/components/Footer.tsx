@@ -4,6 +4,7 @@ import { useRef, useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { useGSAP, gsap } from "@/hooks/useGSAP";
 import GeometricLines from "@/components/GeometricLines";
+import MagneticButton from "./MagneticButton";
 
 const REEL_VIDEO_URL =
   "https://res.cloudinary.com/dl4f50vlj/video/upload/v1777107837/Final_Promo_fxbnnf.mp4";
@@ -11,7 +12,7 @@ const REEL_VIDEO_URL =
 const footerLinks = [
   { href: "/works", label: "WORKS" },
   { href: "/about", label: "ABOUT" },
-  { href: "mailto:hello@lupin.studio", label: "CONTACT" },
+  { href: "mailto:hello@visualversestudios.com", label: "CONTACT" },
 ];
 
 const legalLinks = [
@@ -174,19 +175,23 @@ export default function Footer() {
                   style={{ opacity: 0 }}
                 >
                   {link.href.startsWith("mailto") ? (
-                    <a
-                      href={link.href}
-                      className="font-headline text-[3rem] md:text-[5rem] lg:text-[7rem] leading-[0.9] text-ink hover:text-ink-muted transition-colors duration-500 tracking-tight block"
-                    >
-                      {link.label}
-                    </a>
+                    <MagneticButton as="div" strength={0.3} className="inline-block">
+                      <a
+                        href={link.href}
+                        className="font-headline text-[3rem] md:text-[5rem] lg:text-[7rem] leading-[0.9] text-ink hover:text-[#E32626] transition-colors duration-500 tracking-tight block"
+                      >
+                        {link.label}
+                      </a>
+                    </MagneticButton>
                   ) : (
-                    <Link
-                      href={link.href}
-                      className="font-headline text-[3rem] md:text-[5rem] lg:text-[7rem] leading-[0.9] text-ink hover:text-ink-muted transition-colors duration-500 tracking-tight block"
-                    >
-                      {link.label}
-                    </Link>
+                    <MagneticButton as="div" strength={0.3} className="inline-block">
+                      <Link
+                        href={link.href}
+                        className="font-headline text-[3rem] md:text-[5rem] lg:text-[7rem] leading-[0.9] text-ink hover:text-[#E32626] transition-colors duration-500 tracking-tight block"
+                      >
+                        {link.label}
+                      </Link>
+                    </MagneticButton>
                   )}
                 </div>
               ))}
@@ -197,13 +202,14 @@ export default function Footer() {
           <div className="border-t border-border pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-6">
               {legalLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="font-label text-caption tracking-wider uppercase text-ink-ghost hover:text-ink-muted transition-colors duration-300"
-                >
-                  {link.label}
-                </a>
+                <MagneticButton as="div" key={link.label} strength={0.15}>
+                  <a
+                    href={link.href}
+                    className="font-label text-caption tracking-wider uppercase text-ink-ghost hover:text-ink-muted transition-colors duration-300 block"
+                  >
+                    {link.label}
+                  </a>
+                </MagneticButton>
               ))}
             </div>
             <div className="flex items-center gap-6">
@@ -211,29 +217,31 @@ export default function Footer() {
                 className="font-label text-caption text-ink-ghost"
                 suppressHydrationWarning
               >
-                © 2026 Lupin
+                © 2026 VISUAL VERSE STUDIOS
               </span>
-              <button
-                onClick={() =>
-                  window.scrollTo({ top: 0, behavior: "smooth" })
-                }
-                className="group flex items-center gap-2 font-label text-caption tracking-wider uppercase text-ink-ghost hover:text-ink-muted transition-colors duration-300"
-              >
-                Back to top
-                <svg
-                  className="w-3 h-3 transform group-hover:-translate-y-1 transition-transform duration-300"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
+              <MagneticButton as="div" strength={0.2}>
+                <button
+                  onClick={() =>
+                    window.scrollTo({ top: 0, behavior: "smooth" })
+                  }
+                  className="group flex items-center gap-2 font-label text-caption tracking-wider uppercase text-ink-ghost hover:text-ink-muted transition-colors duration-300"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 15l7-7 7 7"
-                  />
-                </svg>
-              </button>
+                  Back to top
+                  <svg
+                    className="w-3 h-3 transform group-hover:-translate-y-1 transition-transform duration-300"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5 15l7-7 7 7"
+                    />
+                  </svg>
+                </button>
+              </MagneticButton>
             </div>
           </div>
         </div>

@@ -4,8 +4,10 @@ import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useGSAP, gsap } from "@/hooks/useGSAP";
+import MagneticButton from "./MagneticButton";
 
 const navLinks = [
+  { href: "/", label: "HOME" },
   { href: "/works", label: "WORKS" },
   { href: "/about", label: "ABOUT" },
 ];
@@ -57,12 +59,12 @@ export default function Navigation() {
         style={{
           opacity: 0,
           background: scrolled
-            ? "rgba(247, 247, 245, 0.25)"
+            ? "rgba(10, 10, 10, 0.7)"
             : "transparent",
           backdropFilter: scrolled ? "blur(20px) saturate(1.8)" : "none",
           WebkitBackdropFilter: scrolled ? "blur(20px) saturate(1.8)" : "none",
           boxShadow: scrolled
-            ? "0 4px 30px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(233, 225, 225, 0.4)"
+            ? "0 4px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05)"
             : "none",
         }}
       >
@@ -70,55 +72,78 @@ export default function Navigation() {
           {/* Logo */}
           <Link
             href="/"
-            className={`font-headline text-2xl md:text-3xl tracking-tight transition-colors duration-500 ${textColor}`}
+            className={`flex items-center gap-3 transition-opacity duration-300 hover:opacity-80`}
           >
-            Lupin
+            <img 
+              src="https://res.cloudinary.com/dxvpm6xhq/image/upload/v1778486225/new_png_2_00000_dapjwm.png" 
+              alt="Visual Verse Logo" 
+              className="w-8 h-8 md:w-10 md:h-10 object-contain"
+            />
+            <span
+              className={`transition-colors duration-500 ${textColor}`}
+              style={{
+                fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                fontSize: "clamp(0.7rem, 1.4vw, 1rem)",
+                fontWeight: 600,
+                letterSpacing: "0.25em",
+                textTransform: "uppercase",
+              }}
+            >
+              VISUAL VERSE STUDIOS
+            </span>
           </Link>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`relative font-label text-xs tracking-[0.2em] uppercase transition-colors duration-300 ${textColor} ${hoverColor} ${pathname === link.href ? "opacity-100" : ""
-                  }`}
-              >
-                <span>{link.label}</span>
-                <span
-                  className={`absolute -bottom-1 left-0 h-px transition-all duration-500 ${inDarkSection && !scrolled ? "bg-white" : "bg-ink"
-                    } ${pathname === link.href ? "w-full" : "w-0 group-hover:w-full"
+              <MagneticButton as="div" key={link.href} strength={0.2} className="inline-block">
+                <Link
+                  href={link.href}
+                  className={`relative font-label text-xs tracking-[0.2em] uppercase transition-colors duration-300 ${textColor} ${hoverColor} ${pathname === link.href ? "opacity-100" : ""
                     }`}
-                />
-              </Link>
+                >
+                  <span>{link.label}</span>
+                  <span
+                    className={`absolute -bottom-1 left-0 h-px transition-all duration-500 ${inDarkSection && !scrolled ? "bg-white" : "bg-ink"
+                      } ${pathname === link.href ? "w-full" : "w-0 group-hover:w-full"
+                      }`}
+                  />
+                </Link>
+              </MagneticButton>
             ))}
 
-            <a
-              href="mailto:hello@lupin.studio"
-              className={`font-label text-xs tracking-[0.2em] uppercase transition-colors duration-300 ${textColor} ${hoverColor}`}
-            >
-              CONTACT
-            </a>
+            <MagneticButton as="div" strength={0.2} className="inline-block">
+              <a
+                href="mailto:hello@visualversestudios.com"
+                className={`font-label text-xs tracking-[0.2em] uppercase transition-colors duration-300 ${textColor} ${hoverColor}`}
+              >
+                CONTACT
+              </a>
+            </MagneticButton>
 
             <div className={`flex items-center gap-2 ml-2 pl-4 border-l transition-colors duration-500 ${inDarkSection && !scrolled ? "border-white/20" : "border-border"
               }`}>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`text-xs font-label tracking-widest transition-colors duration-300 ${textColor} ${hoverColor}`}
-              >
-                IG
-              </a>
+              <MagneticButton as="div" strength={0.15} className="inline-block">
+                <a
+                  href="https://www.fiverr.com/visual_verse_/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`text-xs font-label tracking-widest transition-colors duration-300 ${textColor} ${hoverColor}`}
+                >
+                  Fiverr
+                </a>
+              </MagneticButton>
               <span className={`transition-colors duration-500 ${inDarkSection && !scrolled ? "text-white/30" : "text-ink-ghost"}`}>/</span>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`text-xs font-label tracking-widest transition-colors duration-300 ${textColor} ${hoverColor}`}
-              >
-                YT
-              </a>
+              <MagneticButton as="div" strength={0.15} className="inline-block">
+                <a
+                  href="http://www.youtube.com/@vverse-ae"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`text-xs font-label tracking-widest transition-colors duration-300 ${textColor} ${hoverColor}`}
+                >
+                  YT
+                </a>
+              </MagneticButton>
             </div>
           </div>
 
@@ -158,7 +183,7 @@ export default function Navigation() {
           </Link>
         ))}
         <a
-          href="mailto:hello@lupin.studio"
+          href="mailto:hello@visualversestudios.com"
           onClick={() => setMenuOpen(false)}
           className="font-headline text-4xl text-ink transition-colors"
         >

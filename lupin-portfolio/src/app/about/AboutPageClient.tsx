@@ -156,7 +156,7 @@ export default function AboutPageClient() {
         {/* Vertical divider */}
         <div
           className="hidden md:block absolute top-0 bottom-0 left-[33%] w-px"
-          style={{ backgroundColor: "rgba(13,13,13,0.06)" }}
+          style={{ backgroundColor: "rgba(255,255,255,0.06)" }}
         />
 
         <div className="container-wide">
@@ -188,7 +188,7 @@ export default function AboutPageClient() {
                     fontWeight: 300,
                   }}
                 >
-                  Lupin is a multidisciplinary creator — a designer, editor, and
+                  VISUAL VERSE STUDIOS is a multidisciplinary creator — a designer, editor, and
                   visual storyteller crafting work from concept to final frame.
                   Not just production; strategy, design, and direction all in one
                   place.
@@ -247,10 +247,10 @@ export default function AboutPageClient() {
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
-            {values.map((value) => (
+            {values.map((value, index) => (
               <div
                 key={value.number}
-                className="value-card group py-8 md:py-10 px-6 md:px-8 border-b border-border last:border-b-0 md:odd:border-r"
+                className={`value-card group py-8 md:py-10 px-6 md:px-8 ${index < 2 ? "border-b border-border" : ""} ${index % 2 === 0 ? "md:border-r md:border-border" : ""}`}
                 style={{ opacity: 0 }}
               >
                 <div className="flex items-start justify-between mb-4">
@@ -285,7 +285,7 @@ export default function AboutPageClient() {
             TOGETHER?
           </h2>
           <a
-            href="mailto:hello@lupin.studio"
+            href="mailto:hello@visualversestudios.com"
             className="arrow-link group inline-flex items-center font-label text-sm tracking-wide text-ink-muted hover:text-ink transition-colors duration-300"
           >
             <span className="relative">

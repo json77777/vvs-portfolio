@@ -1,27 +1,102 @@
 "use client";
 
-import { useRef, useState } from "react";
-import Link from "next/link";
+import { useRef, useState, useCallback } from "react";
 import { useGSAP, gsap } from "@/hooks/useGSAP";
-import { projects } from "@/data/projects";
+import { worksProjects } from "@/data/projects";
+import type { Project } from "@/data/projects";
 import Footer from "@/components/Footer";
+import MagneticButton from "@/components/MagneticButton";
 
 const categories = [
-  "All",
-  "Design",
-  "Creative",
-  "Production",
-  "Post-production",
+  "Long Form Edits",
+  "Graphic Design",
+  "Shorts Edits",
 ];
+
+/* ── Works Card ─────────────────────────────────────────────
+ * Video categories: loops muted, unmutes on hover (like carousel)
+ * Graphic Design:   static image, natural aspect ratio
+ * ────────────────────────────────────────────────────────── */
+function WorksCard({ project, activeCategory }: { project: Project; activeCategory: string }) {
+  const isVideo = activeCategory === "Long Form Edits" || activeCategory === "Shorts Edits";
+  const aspectClass =
+    activeCategory === "Graphic Design"
+      ? ""
+      : activeCategory === "Long Form Edits"
+        ? "aspect-video"
+        : "aspect-[9/16]";
+
+  const handleMouseEnter = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const vid = e.currentTarget.querySelector("video");
+    if (vid) {
+      vid.muted = false;
+      vid.volume = 0.5;
+      vid.play().catch(() => {});
+    }
+  }, []);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const vid = e.currentTarget.querySelector("video");
+    if (vid && vid.muted) {
+      vid.muted = false;
+      vid.volume = 0.5;
+      vid.play().catch(() => {});
+    }
+  }, []);
+
+  const handleMouseLeave = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const vid = e.currentTarget.querySelector("video");
+    if (vid) {
+      vid.muted = true;
+    }
+  }, []);
+
+  return (
+    <div className="works-grid-card">
+      <div
+        className="group block"
+        onMouseEnter={isVideo ? handleMouseEnter : undefined}
+        onMouseMove={isVideo ? handleMouseMove : undefined}
+        onMouseLeave={isVideo ? handleMouseLeave : undefined}
+      >
+        <div className={`relative ${aspectClass} rounded-sm overflow-hidden bg-surface`}>
+          {isVideo ? (
+            <video
+              src={project.videoHover || project.image}
+              loop
+              muted
+              autoPlay
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          ) : (
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-auto transition-transform duration-700 group-hover:scale-105"
+              loading="lazy"
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function WorksPageClient() {
   const pageRef = useRef<HTMLDivElement>(null);
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeCategory, setActiveCategory] = useState("Long Form Edits");
 
-  const filteredProjects =
-    activeCategory === "All"
-      ? projects
-      : projects.filter((p) => p.category === activeCategory);
+  /* Each category maps to its own internal tag — completely independent */
+  const categoryMap: Record<string, string> = {
+    "Long Form Edits": "Long Form",
+    "Graphic Design": "Design",
+    "Shorts Edits": "Shorts",
+  };
+
+  const filteredProjects = worksProjects.filter(
+    (p) => p.category === categoryMap[activeCategory]
+  );
 
   useGSAP(() => {
     if (!pageRef.current) return;
@@ -67,9 +142,9 @@ export default function WorksPageClient() {
                 letterSpacing: "-0.02em",
               }}
             >
-              ALL PROJECTS
+              ALL WORKS
               <sup className="font-label text-body text-ink-faded ml-2" style={{ fontSize: "0.25em" }}>
-                ({projects.length})
+                ({worksProjects.length})
               </sup>
             </h1>
           </div>
@@ -80,57 +155,36 @@ export default function WorksPageClient() {
               {filteredProjects
                 .filter((_, i) => i % 2 === 0)
                 .map((project) => (
-                  <div key={project.id} className="works-grid-card">
-                    <Link
-                      href={`/works#${project.id}`}
-                      className="group block"
-                    >
-                      <div className="relative aspect-[4/3] rounded-sm overflow-hidden bg-surface">
-                        <div
-                          className="absolute inset-0 transition-transform duration-700 group-hover:scale-105"
-                          style={{ backgroundColor: project.color }}
-                        />
-                      </div>
-                      <div className="mt-3 flex items-start justify-between">
-                        <div>
-                          <h3 className="font-headline text-lg text-ink group-hover:text-ink-muted transition-colors duration-300">
-                            {project.title}
-                          </h3>
-                          <p
-                            className="font-accent text-body-sm text-ink-faded"
-                            style={{ fontStyle: "italic" }}
-                          >
-                            {project.subtitle}
-                          </p>
-                        </div>
-                        <span className="font-label text-[10px] tracking-wider uppercase text-ink-ghost">
-                          {project.category}
-                        </span>
-                      </div>
-                    </Link>
-                  </div>
+                  <WorksCard key={project.id} project={project} activeCategory={activeCategory} />
                 ))}
             </div>
 
             {/* Center filters */}
             <div className="lg:w-[40%] lg:px-8 flex flex-col items-center">
-              <div className="lg:sticky lg:top-32 space-y-2 w-full">
+              <div className="lg:sticky lg:top-32 space-y-6 w-full mt-10">
                 {categories.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setActiveCategory(cat)}
-                    className={`works-category-filter block w-full text-center font-headline uppercase tracking-tight transition-all duration-500 ${
-                      activeCategory === cat
-                        ? "text-ink"
-                        : "text-ink-ghost hover:text-ink-faded"
-                    }`}
-                    style={{
-                      opacity: 0,
-                      fontSize: "clamp(1.5rem, 4vw, 3.5rem)",
-                    }}
-                  >
-                    {cat}
-                  </button>
+                  <div key={cat} className="works-category-filter w-full">
+                    <MagneticButton as="div" strength={0.2} className="w-full flex justify-center">
+                      <button
+                        onClick={() => setActiveCategory(cat)}
+                        className={`relative block text-center font-headline uppercase tracking-tight transition-all duration-500 ${
+                          activeCategory === cat
+                            ? "text-ink scale-110"
+                            : "text-ink-ghost hover:text-ink-faded hover:scale-105"
+                        }`}
+                        style={{
+                          fontSize: "clamp(1.5rem, 4vw, 3.5rem)",
+                        }}
+                      >
+                        {cat}
+                        <span
+                          className={`absolute -bottom-2 left-1/2 -translate-x-1/2 h-[2px] bg-[#E32626] transition-all duration-500 ease-out ${
+                            activeCategory === cat ? "w-12 opacity-100" : "w-0 opacity-0"
+                          }`}
+                        />
+                      </button>
+                    </MagneticButton>
+                  </div>
                 ))}
               </div>
             </div>
@@ -140,35 +194,7 @@ export default function WorksPageClient() {
               {filteredProjects
                 .filter((_, i) => i % 2 === 1)
                 .map((project) => (
-                  <div key={project.id} className="works-grid-card">
-                    <Link
-                      href={`/works#${project.id}`}
-                      className="group block"
-                    >
-                      <div className="relative aspect-[4/3] rounded-sm overflow-hidden bg-surface">
-                        <div
-                          className="absolute inset-0 transition-transform duration-700 group-hover:scale-105"
-                          style={{ backgroundColor: project.color }}
-                        />
-                      </div>
-                      <div className="mt-3 flex items-start justify-between">
-                        <div>
-                          <h3 className="font-headline text-lg text-ink group-hover:text-ink-muted transition-colors duration-300">
-                            {project.title}
-                          </h3>
-                          <p
-                            className="font-accent text-body-sm text-ink-faded"
-                            style={{ fontStyle: "italic" }}
-                          >
-                            {project.subtitle}
-                          </p>
-                        </div>
-                        <span className="font-label text-[10px] tracking-wider uppercase text-ink-ghost">
-                          {project.category}
-                        </span>
-                      </div>
-                    </Link>
-                  </div>
+                  <WorksCard key={project.id} project={project} activeCategory={activeCategory} />
                 ))}
             </div>
           </div>

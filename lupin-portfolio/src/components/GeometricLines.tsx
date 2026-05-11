@@ -15,7 +15,7 @@ interface Props {
   className?: string;
 }
 
-const S = "#0D0D0D"; // stroke color for light sections
+const S = "#FFFFFF"; // stroke color for dark sections
 
 export default function GeometricLines({ variant, className = "" }: Props) {
   return (
@@ -40,7 +40,7 @@ function AboutLines() {
       {/* Vertical divider at ~33% */}
       <div
         className="hidden md:block absolute top-0 bottom-0 left-[33.33%] w-px"
-        style={{ backgroundColor: "rgba(13,13,13,0.08)" }}
+        style={{ backgroundColor: "rgba(255,255,255,0.08)" }}
       />
 
       {/* Large arc — top-right, extends off-screen */}
@@ -83,7 +83,7 @@ function WorksLines() {
   return (
     <>
       {/* Horizontal section divider at top */}
-      <div className="absolute top-0 left-0 right-0 h-px" style={{ backgroundColor: "rgba(13,13,13,0.08)" }} />
+      <div className="absolute top-0 left-0 right-0 h-px" style={{ backgroundColor: "rgba(255,255,255,0.08)" }} />
 
       {/* Large centered ellipse */}
       <svg
@@ -120,7 +120,7 @@ function ServicesLines() {
   return (
     <>
       {/* Top border */}
-      <div className="absolute top-0 left-0 right-0 h-px" style={{ backgroundColor: "rgba(13,13,13,0.08)" }} />
+      <div className="absolute top-0 left-0 right-0 h-px" style={{ backgroundColor: "rgba(255,255,255,0.08)" }} />
 
       {/* Large arc — right side, crossing into section */}
       <svg
@@ -194,7 +194,7 @@ function FooterLines() {
       {/* Vertical divider at ~33% */}
       <div
         className="hidden md:block absolute top-0 bottom-0 left-[33.33%] w-px"
-        style={{ backgroundColor: "rgba(13,13,13,0.07)" }}
+        style={{ backgroundColor: "rgba(255,255,255,0.07)" }}
       />
 
       {/* Large ellipse from center-top, rising upward */}
