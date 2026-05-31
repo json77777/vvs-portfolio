@@ -13,7 +13,7 @@ export default function LoaderWrapper({
 
   // Only show loader on first visit per session
   useEffect(() => {
-    const hasVisited = sessionStorage.getItem("lupin-visited");
+    const hasVisited = sessionStorage.getItem("vvs-visited");
     if (hasVisited) {
       setIsLoading(false);
       setShowLoader(false);
@@ -22,7 +22,7 @@ export default function LoaderWrapper({
 
   const handleComplete = () => {
     setIsLoading(false);
-    sessionStorage.setItem("lupin-visited", "true");
+    sessionStorage.setItem("vvs-visited", "true");
     // Remove loader from DOM after curtain animation completes
     setTimeout(() => setShowLoader(false), 200);
   };

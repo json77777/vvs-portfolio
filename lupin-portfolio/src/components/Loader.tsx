@@ -129,7 +129,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
       );
   }
 
-  const nameChars = "LUPIN".split("");
+  const nameChars = "VISUAL VERSE".split("");
 
   return (
     <div
@@ -165,30 +165,29 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
               key={i}
               className="loader-name-char inline-block font-headline text-white"
               style={{
-                fontSize: "clamp(4rem, 14vw, 12rem)",
+                fontSize: "clamp(2rem, 8vw, 8rem)",
                 letterSpacing: "-0.04em",
                 lineHeight: 1,
                 transformOrigin: "center bottom",
                 willChange: "transform",
               }}
             >
-              {char}
+              {char === " " ? "\u00A0" : char}
             </span>
           ))}
         </div>
 
-        {/* Tagline */}
+        {/* Tagline / Footer */}
         <span
-          className="loader-tagline font-accent mt-2"
+          className="loader-tagline font-headline mt-4 tracking-widest text-white/80"
           style={{
-            fontStyle: "italic",
-            fontSize: "clamp(0.75rem, 2vw, 1.1rem)",
-            letterSpacing: "0.15em",
-            color: "rgba(255,255,255,0.5)",
+            fontSize: "clamp(1rem, 3vw, 2rem)",
+            letterSpacing: "0.5em",
             opacity: 0,
+            textTransform: "uppercase"
           }}
         >
-          Creator &middot; Designer &middot; Editor
+          STUDIOS
         </span>
 
         {/* Progress bar */}

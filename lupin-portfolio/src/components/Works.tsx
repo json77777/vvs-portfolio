@@ -212,6 +212,55 @@ export default function Works() {
         },
       }
     );
+
+    // PROJECT GALLERY heading micro-animations
+    const galleryTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".project-gallery-heading",
+        start: "top 90%",
+        toggleActions: "play none none reverse",
+      },
+    });
+
+    // Title text fades in and slides up
+    galleryTl.fromTo(
+      ".gallery-title",
+      { opacity: 0, y: 16, letterSpacing: "0.08em" },
+      { opacity: 1, y: 0, letterSpacing: "0.25em", duration: 0.8, ease: "power3.out" }
+    );
+
+    // Lines expand outward from center
+    galleryTl.fromTo(
+      ".gallery-line-left, .gallery-line-right",
+      { scaleX: 0, opacity: 0 },
+      { scaleX: 1, opacity: 1, duration: 0.6, ease: "power2.out" },
+      "-=0.5"
+    );
+
+    // Diamond accents scale in with rotation
+    galleryTl.fromTo(
+      ".gallery-diamond",
+      { scale: 0, opacity: 0, rotation: 0 },
+      { scale: 1, opacity: 1, rotation: 45, duration: 0.4, ease: "back.out(2)", stagger: 0.1 },
+      "-=0.4"
+    );
+
+    // Instruction text fade in
+    galleryTl.fromTo(
+      ".gallery-instruction",
+      { opacity: 0, y: 10 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+      "-=0.2"
+    );
+
+    // Subtle continuous glow pulse on diamonds
+    gsap.to(".gallery-diamond", {
+      boxShadow: "0 0 8px rgba(255,255,255,0.4)",
+      repeat: -1,
+      yoyo: true,
+      duration: 2,
+      ease: "sine.inOut",
+    });
   }, [layoutCards]);
 
   /* ── Click title to jump ── */
@@ -247,6 +296,68 @@ export default function Works() {
 
         {/* ── Inner Carousel Stage ─────────────────────── */}
         <div className="relative z-10 pt-16 sm:pt-24 md:pt-32 pb-4">
+          {/* PROJECT GALLERY heading with decorative lines */}
+          <div className="flex items-center justify-center gap-4 sm:gap-6 mb-2 sm:mb-3 project-gallery-heading">
+            {/* Left decorative line */}
+            <div
+              className="gallery-line-left h-px flex-shrink-0"
+              style={{
+                width: "clamp(40px, 8vw, 120px)",
+                background: "linear-gradient(to right, transparent, rgba(255,255,255,0.4))",
+              }}
+            />
+            {/* Small diamond accent */}
+            <div
+              className="gallery-diamond"
+              style={{
+                width: "5px",
+                height: "5px",
+                background: "rgba(255,255,255,0.5)",
+                transform: "rotate(45deg)",
+                flexShrink: 0,
+              }}
+            />
+            <h2
+              className="text-center text-white uppercase gallery-title"
+              style={{
+                fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                fontSize: "clamp(0.7rem, 1.4vw, 1rem)",
+                fontWeight: 600,
+                lineHeight: 1.1,
+                letterSpacing: "0.25em",
+                flexShrink: 0,
+              }}
+            >
+              PROJECT GALLERY
+            </h2>
+            {/* Small diamond accent */}
+            <div
+              className="gallery-diamond"
+              style={{
+                width: "5px",
+                height: "5px",
+                background: "rgba(255,255,255,0.5)",
+                transform: "rotate(45deg)",
+                flexShrink: 0,
+              }}
+            />
+            {/* Right decorative line */}
+            <div
+              className="gallery-line-right h-px flex-shrink-0"
+              style={{
+                width: "clamp(40px, 8vw, 120px)",
+                background: "linear-gradient(to left, transparent, rgba(255,255,255,0.4))",
+              }}
+            />
+          </div>
+
+          {/* Instruction text */}
+          <div className="text-center mb-8 sm:mb-10 gallery-instruction" style={{ opacity: 0 }}>
+            <span className="font-accent text-xs sm:text-sm text-white/50 tracking-wide" style={{ fontStyle: "italic" }}>
+              Hover the cursor over the tiles to play.
+            </span>
+          </div>
+
           <div
             ref={carouselAreaRef}
             className="relative w-full flex items-center justify-center"
@@ -287,14 +398,88 @@ export default function Works() {
                       boxShadow: "none",
                       transition: "box-shadow 0.8s ease",
                     }}
+                    onMouseEnter={(e) => {
+                      const vids = e.currentTarget.parentElement?.querySelectorAll("video");
+                      vids?.forEach((vid, index) => {
+                        if (index === 0) {
+                          vid.muted = false;
+                          vid.volume = 0.5;
+                        }
+                        vid.play().catch(() => {});
+                      });
+                      const iframe = e.currentTarget.querySelector("iframe") as HTMLIFrameElement;
+                      if (iframe?.contentWindow) {
+                        iframe.contentWindow.postMessage(
+                          JSON.stringify({ event: "command", func: "unMute", args: [] }),
+                          "*"
+                        );
+                        iframe.contentWindow.postMessage(
+                          JSON.stringify({ event: "command", func: "playVideo", args: [] }),
+                          "*"
+                        );
+                      }
+                    }}
+                    onMouseMove={(e) => {
+                      const vid = e.currentTarget.querySelector("video");
+                      if (vid && vid.muted) {
+                        vid.muted = false;
+                        vid.volume = 0.5;
+                        vid.play().catch(() => {});
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      const vids = e.currentTarget.parentElement?.querySelectorAll("video");
+                      vids?.forEach((vid) => {
+                        vid.muted = true;
+                        vid.pause();
+                      });
+                      const iframe = e.currentTarget.querySelector("iframe") as HTMLIFrameElement;
+                      if (iframe?.contentWindow) {
+                        iframe.contentWindow.postMessage(
+                          JSON.stringify({ event: "command", func: "mute", args: [] }),
+                          "*"
+                        );
+                        iframe.contentWindow.postMessage(
+                          JSON.stringify({ event: "command", func: "pauseVideo", args: [] }),
+                          "*"
+                        );
+                      }
+                    }}
                   >
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      sizes="280px"
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    />
+                    {/* Static thumbnail (only when no video and no youtube) */}
+                    {!project.videoHover && !project.youtubeId && (
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        sizes="280px"
+                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      />
+                    )}
+
+                    {/* Video — paused by default, plays and unmutes on hover */}
+                    {project.videoHover && (
+                      <video
+                        src={project.videoHover}
+                        loop
+                        muted
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                    )}
+
+                    {/* YouTube embed — paused by default, plays and unmutes on hover */}
+                    {project.youtubeId && (
+                      <iframe
+                        src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=0&mute=1&loop=1&playlist=${project.youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
+                        title={project.title}
+                        allow="autoplay; encrypted-media"
+                        allowFullScreen
+                        className="absolute inset-0 w-full h-full border-0"
+                        style={{ pointerEvents: "none" }}
+                      />
+                    )}
+
                     {/* Bottom gradient */}
                     <div
                       className="absolute inset-0"
@@ -326,13 +511,31 @@ export default function Works() {
                     }}
                   >
                     <div className="relative w-full h-full">
-                      <Image
-                        src={project.image}
-                        alt=""
-                        fill
-                        sizes="280px"
-                        className="object-cover object-bottom"
-                      />
+                      {project.videoHover ? (
+                        <video
+                          src={project.videoHover}
+                          loop
+                          muted
+                          playsInline
+                          className="w-full h-full object-cover object-bottom"
+                        />
+                      ) : project.youtubeId ? (
+                        <Image
+                          src={`https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`}
+                          alt=""
+                          fill
+                          sizes="280px"
+                          className="object-cover object-bottom"
+                        />
+                      ) : (
+                        <Image
+                          src={project.image}
+                          alt=""
+                          fill
+                          sizes="280px"
+                          className="object-cover object-bottom"
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -369,18 +572,6 @@ export default function Works() {
                   /{String(TOTAL).padStart(2, "0")}
                 </span>
               </div>
-              <span
-                className="font-accent text-sm text-white/50 block mt-2"
-                style={{ fontStyle: "italic" }}
-              >
-                {projects[activeIndex].subtitle}
-              </span>
-              <span
-                className="font-accent text-xs text-white/30 block mt-1"
-                style={{ fontStyle: "italic" }}
-              >
-                {projects[activeIndex].category}
-              </span>
             </div>
 
             {/* Right — Project title list */}
@@ -418,7 +609,7 @@ export default function Works() {
           <div className="mt-6 flex items-center justify-center gap-3">
             <div className="relative h-px bg-white/8 overflow-hidden rounded-full" style={{ width: "140px" }}>
               <div
-                className="absolute top-0 left-0 h-full bg-white/40 rounded-full transition-all duration-500 ease-out"
+                className="absolute top-0 left-0 h-full bg-[#E32626] rounded-full transition-all duration-500 ease-out"
                 style={{ width: `${((activeIndex + 1) / TOTAL) * 100}%` }}
               />
             </div>

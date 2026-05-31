@@ -54,37 +54,35 @@ export default function About() {
 
       <div className="container-wide relative z-10">
         {/* Side-by-side layout: image left, text right */}
-        <div className="flex flex-col md:flex-row items-start gap-10 md:gap-16">
+        <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
           {/* Left image — beside the text */}
-          <div className="about-image w-full md:w-[28%] shrink-0" style={{ opacity: 0 }}>
-            <div className="relative aspect-[4/5] rounded-sm overflow-hidden bg-surface">
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(60,50,45,0.8) 0%, rgba(30,25,22,0.95) 100%)",
-                }}
-              />
-              {/* Placeholder content — subtle creative workspace feel */}
-              <div className="absolute bottom-4 left-4 font-accent text-sm text-white/40" style={{ fontStyle: "italic" }}>
-                Lupin Studio
-              </div>
-            </div>
+          <div className="about-image w-full md:w-[28%] shrink-0 flex items-center justify-center" style={{ opacity: 0 }}>
+            <img
+              src="https://res.cloudinary.com/dxvpm6xhq/image/upload/v1779984329/vvlogo-updated_tzg7bh.png"
+              alt="Visual Verse Studios"
+              className="w-full h-auto object-contain"
+            />
           </div>
 
           {/* Right — large italic serif statement */}
           <div className="about-statement flex-1" style={{ opacity: 0 }}>
             <p
-              className="font-accent leading-[1.35]"
+              className="font-accent leading-[1.4] group text-justify"
               style={{
                 fontStyle: "italic",
-                fontSize: "clamp(1.9rem, 4.2vw, 3.5rem)",
+                fontSize: "clamp(1.2rem, 2.5vw, 2.2rem)",
                 color: "var(--color-ink)",
                 fontWeight: 300,
-                marginTop: "-0.3em",
               }}
             >
-              "I am a designer and editor driven by a single goal: to turn raw ideas into cinematic reality. My work is a balance of meticulous craft and bold instinct. I don't just build frames; I build authenticity. This is where your brand stops blending in and starts rising above the crowd."
+              {"“At Visual Verse Studios, we are a team of designers and editors driven by a single goal: transforming raw ideas into cinematic reality. Our work is built on the balance between meticulous craft and bold instinct. We don’t just create frames, we create authenticity. This is where brands stop blending in and start rising above the crowd.”".split(" ").map((word, i, arr) => (
+                <span key={i} className="inline">
+                  <span className="inline-block transition-all duration-300 hover:scale-[1.15] hover:-translate-y-1 hover:text-white hover:z-10 relative cursor-default origin-center">
+                    {word}
+                  </span>
+                  {i < arr.length - 1 && " "}
+                </span>
+              ))}
             </p>
           </div>
         </div>
