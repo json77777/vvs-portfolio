@@ -15,17 +15,14 @@ const footerLinks = [
   { href: "mailto:hello@visualversestudios.com", label: "CONTACT" },
 ];
 
-const legalLinks = [
-  { href: "#", label: "Privacy" },
-  { href: "#", label: "Legals" },
-  { href: "#", label: "Credits" },
-];
+
 
 export default function Footer() {
   const footerRef = useRef<HTMLElement>(null);
   const modalVideoRef = useRef<HTMLVideoElement>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [contactDropdownOpen, setContactDropdownOpen] = useState(false);
 
   /* ── Open / Close ────────────────────── */
   const openModal = useCallback(() => {
@@ -168,53 +165,70 @@ export default function Footer() {
 
             {/* Giant Navigation Links — right aligned like reference */}
             <div className="md:w-2/3 flex flex-col items-end justify-end gap-1">
-              {footerLinks.map((link) => (
+              {footerLinks.slice(0, 2).map((link) => (
                 <div
                   key={link.label}
                   className="overflow-hidden footer-big-link"
                   style={{ opacity: 0 }}
                 >
-                  {link.href.startsWith("mailto") ? (
-                    <MagneticButton as="div" strength={0.3} className="inline-block">
-                      <a
-                        href={link.href}
-                        className="font-headline text-[3rem] md:text-[5rem] lg:text-[7rem] leading-[0.9] text-ink hover:text-[#E32626] transition-colors duration-500 tracking-tight block"
-                      >
-                        {link.label}
-                      </a>
-                    </MagneticButton>
-                  ) : (
-                    <MagneticButton as="div" strength={0.3} className="inline-block">
-                      <Link
-                        href={link.href}
-                        className="font-headline text-[3rem] md:text-[5rem] lg:text-[7rem] leading-[0.9] text-ink hover:text-[#E32626] transition-colors duration-500 tracking-tight block"
-                      >
-                        {link.label}
-                      </Link>
-                    </MagneticButton>
-                  )}
+                  <Link
+                    href={link.href}
+                    className="font-headline text-[3rem] md:text-[5rem] lg:text-[7rem] leading-[0.9] text-ink hover:text-[#E32626] transition-colors duration-500 tracking-tight block text-right"
+                  >
+                    {link.label}
+                  </Link>
                 </div>
               ))}
+
+              {/* Interactive Contact Button */}
+              <div className="overflow-hidden footer-big-link" style={{ opacity: 0 }}>
+                <div className="flex items-center justify-end">
+                  {/* Sliding icons container */}
+                  <div
+                    className={`flex flex-col justify-center gap-2 overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] ${
+                      contactDropdownOpen ? "max-w-[150px] md:max-w-[200px] opacity-100 mr-4 md:mr-8" : "max-w-0 opacity-0 mr-0"
+                    }`}
+                  >
+                    <a
+                      href="https://discord.gg/QVYzq9yy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center justify-end gap-2 text-ink hover:text-[#E32626] transition-all duration-300 whitespace-nowrap"
+                    >
+                      <span className="font-accent text-xs md:text-sm tracking-widest uppercase">Discord</span>
+                      <svg className="w-3 h-3 md:w-4 md:h-4 transform transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                      </svg>
+                    </a>
+                    <a
+                      href="#"
+                      className="group flex items-center justify-end gap-2 text-ink hover:text-[#E32626] transition-all duration-300 whitespace-nowrap"
+                    >
+                      <span className="font-accent text-xs md:text-sm tracking-widest uppercase">Instagram</span>
+                      <svg className="w-3 h-3 md:w-4 md:h-4 transform transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                      </svg>
+                    </a>
+                  </div>
+                  
+                  <button
+                    onClick={() => setContactDropdownOpen(!contactDropdownOpen)}
+                    className="font-headline text-[3rem] md:text-[5rem] lg:text-[7rem] leading-[0.9] text-ink hover:text-[#E32626] transition-colors duration-500 tracking-tight flex-shrink-0 text-right"
+                  >
+                    CONTACT
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Bottom row */}
-          <div className="border-t border-border pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-6">
-              {legalLinks.map((link) => (
-                <MagneticButton as="div" key={link.label} strength={0.15}>
-                  <a
-                    href={link.href}
-                    className="font-label text-caption tracking-wider uppercase text-ink-ghost hover:text-ink-muted transition-colors duration-300 block"
-                  >
-                    {link.label}
-                  </a>
-                </MagneticButton>
-              ))}
-            </div>
+          <div className="border-t border-border pt-6 flex flex-col md:flex-row items-center justify-end gap-4">
             <div className="flex items-center gap-6">
               <span
-                className="font-label text-caption text-ink-ghost"
+                className="font-label text-caption text-ink-ghost transition-all duration-300 hover:text-white hover:[text-shadow:0_0_8px_#fff]"
                 suppressHydrationWarning
               >
                 © 2026 VISUAL VERSE STUDIOS

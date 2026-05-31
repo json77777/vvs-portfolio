@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope, Cormorant_Garamond } from "next/font/google";
+import { Manrope, Cormorant_Garamond, Syne } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navigation from "@/components/Navigation";
@@ -20,8 +20,15 @@ const cormorant = Cormorant_Garamond({
   style: ["normal", "italic"],
 });
 
+const syne = Syne({
+  subsets: ["latin"],
+  weight: ["700", "800"],
+  variable: "--font-syne",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "VISUAL VERSE STUDIOS — Creator, Designer & Editor",
+  title: "Visual Verse Studios - Portfolio",
   description:
     "VISUAL VERSE STUDIOS is a multidisciplinary creator, designer, and editor — crafting visual narratives from concept to final frame.",
   keywords: [
@@ -34,7 +41,7 @@ export const metadata: Metadata = {
     "visual storytelling",
   ],
   openGraph: {
-    title: "VISUAL VERSE STUDIOS — Creator, Designer & Editor",
+    title: "Visual Verse Studios - Portfolio",
     description:
       "A multidisciplinary creator crafting visual narratives for brands that dare to stand out.",
     type: "website",
@@ -48,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${manrope.variable} ${cormorant.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${manrope.variable} ${cormorant.variable} ${syne.variable}`} suppressHydrationWarning>
       <body suppressHydrationWarning>
         <LoaderWrapper>
           <SmoothScroll>

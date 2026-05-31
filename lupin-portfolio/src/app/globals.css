@@ -68,7 +68,7 @@
 
   /* Backgrounds — monotonic pure dark */
   --color-bg: #0A0A0A;
-  --color-bg-warm: #111111;
+  --color-bg-warm: #8A031B; /* Changed to crimson red */
   --color-bg-white: #1A1A1A;
   --color-bg-dark: #050505;
   --color-surface: #141414;
@@ -90,6 +90,7 @@
   --font-coolvetica: "Coolvetica", "Helvetica", "Arial", sans-serif;
   --font-helvetica-neue: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   --font-cormorant: var(--font-cormorant), "Cormorant Garamond", "Georgia", serif;
+  --font-syne: "Syne", "Arial", sans-serif;
 
   /* Font Sizes — generous, editorial (slightly bumped) */
   --text-display: clamp(4.5rem, 11vw, 11rem);
@@ -122,6 +123,13 @@
 
 /* ===== BASE STYLES ===== */
 @layer base {
+  .bg-bg-warm {
+    --color-ink-muted: rgba(255, 255, 255, 0.9);
+    --color-ink-faded: rgba(255, 255, 255, 0.75);
+    --color-ink-ghost: rgba(255, 255, 255, 0.6);
+    --color-border: rgba(255, 255, 255, 0.2);
+  }
+
   *,
   *::before,
   *::after {
@@ -250,6 +258,7 @@ html.lenis, html.lenis body {
   position: relative;
   overflow: hidden;
   transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  border-radius: 9999px;
 }
 
 .hero-glass-card::before {
@@ -270,12 +279,10 @@ html.lenis, html.lenis body {
 }
 
 .hero-glass-card:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.12) !important;
   border-color: rgba(255, 255, 255, 0.5) !important;
   box-shadow: 
-    0 12px 48px rgba(0, 0, 0, 0.4), 
-    0 0 24px rgba(255, 255, 255, 0.4), 
-    0 0 48px rgba(255, 255, 255, 0.15), 
+    0 4px 16px rgba(255, 255, 255, 0.1), 
     inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
   transform: translateY(-2px);
 }
@@ -283,3 +290,33 @@ html.lenis, html.lenis body {
 .hero-glass-card:hover::before {
   left: 150%;
 }
+
+/* ===== TRACE GLOW ANIMATION ===== */
+@keyframes trace-glow {
+  0% {
+    stroke-dashoffset: 200;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.trace-glow-path {
+  stroke-dasharray: 10 190;
+  animation: trace-glow 8s linear infinite;
+  stroke-linecap: round;
+  fill: none;
+}
+
+/* Add staggered animation durations for variety */
+.trace-glow-path:nth-of-type(3n) {
+  animation-duration: 6s;
+}
+.trace-glow-path:nth-of-type(3n+1) {
+  animation-duration: 10s;
+  animation-direction: reverse;
+}
+.trace-glow-path:nth-of-type(3n+2) {
+  animation-duration: 14s;
+}
+

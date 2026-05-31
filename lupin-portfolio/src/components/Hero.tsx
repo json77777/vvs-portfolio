@@ -124,11 +124,11 @@ export default function Hero() {
 
   /* Shared glass-card style — capsule shape, smaller size */
   const glassStyle = (variant: "side" | "center") => ({
-    padding: "clamp(0.5rem, 1.2vw, 0.9rem) clamp(1.2rem, 3vw, 2.8rem)",
+    padding: "clamp(0.35rem, 1vw, 0.7rem) clamp(1rem, 2.5vw, 2.2rem)",
     background:
       variant === "center"
-        ? "rgba(255, 255, 255, 0.07)"
-        : "rgba(255, 255, 255, 0.05)",
+        ? "rgba(255, 255, 255, 0.12)"
+        : "rgba(255, 255, 255, 0.08)",
     backdropFilter:
       variant === "center"
         ? "blur(24px) saturate(1.6)"
@@ -139,19 +139,19 @@ export default function Hero() {
         : "blur(20px) saturate(1.4)",
     border:
       variant === "center"
-        ? "1px solid rgba(255, 255, 255, 0.16)"
-        : "1px solid rgba(255, 255, 255, 0.12)",
+        ? "1px solid rgba(255, 255, 255, 0.25)"
+        : "1px solid rgba(255, 255, 255, 0.18)",
     borderRadius: "9999px",
     boxShadow:
       variant === "center"
-        ? "0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
-        : "0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08)",
+        ? "inset 0 1px 0 rgba(255, 255, 255, 0.15)"
+        : "inset 0 1px 0 rgba(255, 255, 255, 0.12)",
   });
 
   const textStyle = {
-    fontFamily: "var(--font-lemonmilk)",
-    fontSize: "clamp(1.1rem, 2.4vw, 2.2rem)",
-    fontWeight: 700,
+    fontFamily: "var(--font-headline)",
+    fontSize: "clamp(1.1rem, 2.2vw, 2.1rem)",
+    fontWeight: 400,
     letterSpacing: "0.06em",
     lineHeight: 1,
   };

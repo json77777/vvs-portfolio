@@ -245,6 +245,14 @@ export default function Works() {
       "-=0.4"
     );
 
+    // Instruction text fade in
+    galleryTl.fromTo(
+      ".gallery-instruction",
+      { opacity: 0, y: 10 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+      "-=0.2"
+    );
+
     // Subtle continuous glow pulse on diamonds
     gsap.to(".gallery-diamond", {
       boxShadow: "0 0 8px rgba(255,255,255,0.4)",
@@ -289,7 +297,7 @@ export default function Works() {
         {/* ── Inner Carousel Stage ─────────────────────── */}
         <div className="relative z-10 pt-16 sm:pt-24 md:pt-32 pb-4">
           {/* PROJECT GALLERY heading with decorative lines */}
-          <div className="flex items-center justify-center gap-4 sm:gap-6 mb-8 sm:mb-12 project-gallery-heading">
+          <div className="flex items-center justify-center gap-4 sm:gap-6 mb-2 sm:mb-3 project-gallery-heading">
             {/* Left decorative line */}
             <div
               className="gallery-line-left h-px flex-shrink-0"
@@ -342,6 +350,14 @@ export default function Works() {
               }}
             />
           </div>
+
+          {/* Instruction text */}
+          <div className="text-center mb-8 sm:mb-10 gallery-instruction" style={{ opacity: 0 }}>
+            <span className="font-accent text-xs sm:text-sm text-white/50 tracking-wide" style={{ fontStyle: "italic" }}>
+              Hover the cursor over the tiles to play.
+            </span>
+          </div>
+
           <div
             ref={carouselAreaRef}
             className="relative w-full flex items-center justify-center"
@@ -383,24 +399,27 @@ export default function Works() {
                       transition: "box-shadow 0.8s ease",
                     }}
                     onMouseEnter={(e) => {
-                      // Unmute direct video
-                      const vid = e.currentTarget.querySelector("video");
-                      if (vid) {
-                        vid.muted = false;
-                        vid.volume = 0.5;
+                      const vids = e.currentTarget.parentElement?.querySelectorAll("video");
+                      vids?.forEach((vid, index) => {
+                        if (index === 0) {
+                          vid.muted = false;
+                          vid.volume = 0.5;
+                        }
                         vid.play().catch(() => {});
-                      }
-                      // Unmute YouTube iframe
+                      });
                       const iframe = e.currentTarget.querySelector("iframe") as HTMLIFrameElement;
                       if (iframe?.contentWindow) {
                         iframe.contentWindow.postMessage(
                           JSON.stringify({ event: "command", func: "unMute", args: [] }),
                           "*"
                         );
+                        iframe.contentWindow.postMessage(
+                          JSON.stringify({ event: "command", func: "playVideo", args: [] }),
+                          "*"
+                        );
                       }
                     }}
                     onMouseMove={(e) => {
-                      // Ensure video stays unmuted while hovering (fixes scroll-under-mouse issue)
                       const vid = e.currentTarget.querySelector("video");
                       if (vid && vid.muted) {
                         vid.muted = false;
@@ -409,16 +428,19 @@ export default function Works() {
                       }
                     }}
                     onMouseLeave={(e) => {
-                      // Mute direct video
-                      const vid = e.currentTarget.querySelector("video");
-                      if (vid) {
+                      const vids = e.currentTarget.parentElement?.querySelectorAll("video");
+                      vids?.forEach((vid) => {
                         vid.muted = true;
-                      }
-                      // Mute YouTube iframe
+                        vid.pause();
+                      });
                       const iframe = e.currentTarget.querySelector("iframe") as HTMLIFrameElement;
                       if (iframe?.contentWindow) {
                         iframe.contentWindow.postMessage(
                           JSON.stringify({ event: "command", func: "mute", args: [] }),
+                          "*"
+                        );
+                        iframe.contentWindow.postMessage(
+                          JSON.stringify({ event: "command", func: "pauseVideo", args: [] }),
                           "*"
                         );
                       }
@@ -435,22 +457,21 @@ export default function Works() {
                       />
                     )}
 
-                    {/* Video — plays muted loop by default, unmutes on hover */}
+                    {/* Video — paused by default, plays and unmutes on hover */}
                     {project.videoHover && (
                       <video
                         src={project.videoHover}
                         loop
                         muted
-                        autoPlay
                         playsInline
                         className="absolute inset-0 w-full h-full object-cover"
                       />
                     )}
 
-                    {/* YouTube embed — plays muted loop by default, unmutes on hover */}
+                    {/* YouTube embed — paused by default, plays and unmutes on hover */}
                     {project.youtubeId && (
                       <iframe
-                        src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${project.youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
+                        src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=0&mute=1&loop=1&playlist=${project.youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
                         title={project.title}
                         allow="autoplay; encrypted-media"
                         allowFullScreen
@@ -495,7 +516,6 @@ export default function Works() {
                           src={project.videoHover}
                           loop
                           muted
-                          autoPlay
                           playsInline
                           className="w-full h-full object-cover object-bottom"
                         />
@@ -552,18 +572,6 @@ export default function Works() {
                   /{String(TOTAL).padStart(2, "0")}
                 </span>
               </div>
-              <span
-                className="font-accent text-sm text-white/50 block mt-2"
-                style={{ fontStyle: "italic" }}
-              >
-                {projects[activeIndex].subtitle}
-              </span>
-              <span
-                className="font-accent text-xs text-white/30 block mt-1"
-                style={{ fontStyle: "italic" }}
-              >
-                {projects[activeIndex].category}
-              </span>
             </div>
 
             {/* Right — Project title list */}

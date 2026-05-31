@@ -11,18 +11,29 @@ const categories = [
   "Long Form Edits",
   "Graphic Design",
   "Shorts Edits",
+  "SaaS Edits",
 ];
 
 /* ── Works Card ─────────────────────────────────────────────
  * Video categories: loops muted, unmutes on hover (like carousel)
  * Graphic Design:   static image, natural aspect ratio
  * ────────────────────────────────────────────────────────── */
-function WorksCard({ project, activeCategory }: { project: Project; activeCategory: string }) {
-  const isVideo = activeCategory === "Long Form Edits" || activeCategory === "Shorts Edits";
+function WorksCard({ 
+  project, 
+  activeCategory,
+  onOpenFullScreen
+}: { 
+  project: Project; 
+  activeCategory: string;
+  onOpenFullScreen?: (project: Project) => void;
+}) {
+  const isVideo = activeCategory === "Long Form Edits" || activeCategory === "Shorts Edits" || activeCategory === "SaaS Edits";
+  const isLongForm = activeCategory === "Long Form Edits" || activeCategory === "SaaS Edits";
+  const isGraphicDesign = activeCategory === "Graphic Design";
   const aspectClass =
-    activeCategory === "Graphic Design"
-      ? ""
-      : activeCategory === "Long Form Edits"
+    isGraphicDesign
+      ? "aspect-[4/3]"
+      : activeCategory === "Long Form Edits" || activeCategory === "SaaS Edits"
         ? "aspect-video"
         : "aspect-[9/16]";
 
@@ -32,6 +43,13 @@ function WorksCard({ project, activeCategory }: { project: Project; activeCatego
       vid.muted = false;
       vid.volume = 0.5;
       vid.play().catch(() => {});
+    }
+    const iframe = e.currentTarget.querySelector("iframe") as HTMLIFrameElement;
+    if (iframe?.contentWindow) {
+      iframe.contentWindow.postMessage(
+        JSON.stringify({ event: "command", func: "unMute", args: [] }),
+        "*"
+      );
     }
   }, []);
 
@@ -49,6 +67,13 @@ function WorksCard({ project, activeCategory }: { project: Project; activeCatego
     if (vid) {
       vid.muted = true;
     }
+    const iframe = e.currentTarget.querySelector("iframe") as HTMLIFrameElement;
+    if (iframe?.contentWindow) {
+      iframe.contentWindow.postMessage(
+        JSON.stringify({ event: "command", func: "mute", args: [] }),
+        "*"
+      );
+    }
   }, []);
 
   return (
@@ -60,7 +85,16 @@ function WorksCard({ project, activeCategory }: { project: Project; activeCatego
         onMouseLeave={isVideo ? handleMouseLeave : undefined}
       >
         <div className={`relative ${aspectClass} rounded-sm overflow-hidden bg-surface`}>
-          {isVideo ? (
+          {isVideo && project.youtubeId ? (
+            <iframe
+              src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${project.youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
+              title={project.title}
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full border-0 transition-transform duration-700 group-hover:scale-105"
+              style={{ pointerEvents: "none" }}
+            />
+          ) : isVideo ? (
             <video
               src={project.videoHover || project.image}
               loop
@@ -73,9 +107,26 @@ function WorksCard({ project, activeCategory }: { project: Project; activeCatego
             <img
               src={project.image}
               alt={project.title}
-              className="w-full h-auto transition-transform duration-700 group-hover:scale-105"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
             />
+          )}
+          
+          {/* Full scale button for long form edits & graphic design */}
+          {(isLongForm || isGraphicDesign) && onOpenFullScreen && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                onOpenFullScreen(project);
+              }}
+              className="absolute bottom-4 right-4 z-10 p-2.5 bg-black/40 hover:bg-black/80 rounded-full text-white backdrop-blur-sm transition-all duration-300 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0"
+              aria-label="View Full Screen"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+              </svg>
+            </button>
           )}
         </div>
       </div>
@@ -86,12 +137,14 @@ function WorksCard({ project, activeCategory }: { project: Project; activeCatego
 export default function WorksPageClient() {
   const pageRef = useRef<HTMLDivElement>(null);
   const [activeCategory, setActiveCategory] = useState("Long Form Edits");
+  const [fullScreenProject, setFullScreenProject] = useState<Project | null>(null);
 
   /* Each category maps to its own internal tag — completely independent */
   const categoryMap: Record<string, string> = {
     "Long Form Edits": "Long Form",
     "Graphic Design": "Design",
     "Shorts Edits": "Shorts",
+    "SaaS Edits": "SaaS",
   };
 
   const filteredProjects = worksProjects.filter(
@@ -155,7 +208,12 @@ export default function WorksPageClient() {
               {filteredProjects
                 .filter((_, i) => i % 2 === 0)
                 .map((project) => (
-                  <WorksCard key={project.id} project={project} activeCategory={activeCategory} />
+                  <WorksCard 
+                    key={project.id} 
+                    project={project} 
+                    activeCategory={activeCategory} 
+                    onOpenFullScreen={setFullScreenProject}
+                  />
                 ))}
             </div>
 
@@ -194,13 +252,66 @@ export default function WorksPageClient() {
               {filteredProjects
                 .filter((_, i) => i % 2 === 1)
                 .map((project) => (
-                  <WorksCard key={project.id} project={project} activeCategory={activeCategory} />
+                  <WorksCard 
+                    key={project.id} 
+                    project={project} 
+                    activeCategory={activeCategory}
+                    onOpenFullScreen={setFullScreenProject}
+                  />
                 ))}
             </div>
           </div>
         </div>
       </section>
       <Footer />
+
+      {/* Full Screen Modal */}
+      {fullScreenProject && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-4 md:p-12">
+          {/* Close background layer */}
+          <div 
+            className="absolute inset-0 z-0" 
+            onClick={() => setFullScreenProject(null)}
+          />
+          
+          {/* Close button */}
+          <button
+            onClick={() => setFullScreenProject(null)}
+            className="absolute top-6 right-6 z-[60] p-3 text-white/70 hover:text-white bg-black/40 hover:bg-black/80 rounded-full transition-all duration-300"
+            aria-label="Close Full Scale"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          
+          <div className="w-full h-full max-w-7xl relative z-10 flex items-center justify-center bg-black rounded-lg overflow-hidden shadow-2xl ring-1 ring-white/10">
+            {fullScreenProject.youtubeId ? (
+              <iframe
+                src={`https://www.youtube.com/embed/${fullScreenProject.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+                title={fullScreenProject.title}
+                allow="autoplay; encrypted-media; fullscreen"
+                allowFullScreen
+                className="w-full h-full border-0 aspect-video object-contain"
+              />
+            ) : fullScreenProject.category === "Design" ? (
+              <img
+                src={fullScreenProject.image}
+                alt={fullScreenProject.title}
+                className="max-w-full max-h-full object-contain"
+              />
+            ) : (
+              <video
+                src={fullScreenProject.videoHover || fullScreenProject.image}
+                controls
+                autoPlay
+                className="w-full h-full object-contain"
+              />
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
