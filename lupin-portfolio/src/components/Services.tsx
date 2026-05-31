@@ -37,20 +37,22 @@ export default function Services() {
     <section
       ref={sectionRef}
       id="services"
-      className="relative py-24 sm:py-32 md:py-48 bg-bg-warm overflow-hidden"
+      className="relative py-12 sm:py-16 md:py-24 lg:py-32 bg-bg-warm overflow-hidden"
     >
       {/* Decorative geometric lines */}
       <GeometricLines variant="services" />
 
       {/* Services grid — clean horizontal layout like reference */}
       <div className="container-wide relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-8">
           {services.map((service, idx) => (
             <div
               key={service.number}
-              className={`service-item group py-8 sm:py-10 px-4 sm:px-6 md:px-8 ${
-                idx > 0 ? "md:border-l border-border" : ""
-              }`}
+              className={`service-item group py-6 sm:py-8 px-6 sm:px-8 lg:px-8 
+                border border-border rounded-2xl bg-black/10 text-center
+                lg:border-y-0 lg:border-r-0 lg:rounded-none lg:bg-transparent 
+                ${idx > 0 ? "lg:border-l" : "lg:border-l-0"}
+              `}
               style={{ opacity: 0 }}
             >
               {/* Number — italic serif like reference */}
@@ -62,7 +64,7 @@ export default function Services() {
                   {service.number}.
                 </span>
                 {/* Title — DeanGothic headline */}
-                <h3 className="font-headline text-h4 md:text-h3 text-ink mt-1 group-hover:text-ink-muted transition-colors duration-500">
+                <h3 className="font-headline text-h5 md:text-h4 lg:text-h3 text-ink mt-1 group-hover:text-ink-muted transition-colors duration-500">
                   {service.title}
                 </h3>
               </div>

@@ -4,8 +4,8 @@ export const runtime = 'edge';
 
 // Image metadata
 export const size = {
-  width: 64,
-  height: 64,
+  width: 128,
+  height: 128,
 };
 export const contentType = 'image/png';
 
@@ -24,9 +24,9 @@ export default function Icon() {
           borderRadius: '50%',
         }}
       >
-        <img 
-          src="https://res.cloudinary.com/dxvpm6xhq/image/upload/v1779984329/vvlogo-updated_tzg7bh.png" 
-          style={{ width: '70%', height: '70%', objectFit: 'contain' }} 
+        <img
+          src="https://res.cloudinary.com/dxvpm6xhq/image/upload/v1779984329/vvlogo-updated_tzg7bh.png"
+          style={{ width: '92%', height: '92%', objectFit: 'contain' }}
         />
       </div>
     ),

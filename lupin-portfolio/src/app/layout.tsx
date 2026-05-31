@@ -40,12 +40,42 @@ export const metadata: Metadata = {
     "creative",
     "visual storytelling",
   ],
+  metadataBase: new URL("https://example.com"), // replace with your site URL
+  authors: [{ name: "Visual Verse Studios", url: "https://example.com" }],
+  themeColor: [{ media: "(prefers-color-scheme: light)", color: "#ffffff" }, { media: "(prefers-color-scheme: dark)", color: "#000000" }],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
     title: "Visual Verse Studios - Portfolio",
     description:
       "A multidisciplinary creator crafting visual narratives for brands that dare to stand out.",
     type: "website",
     locale: "en_US",
+    // default image (used by social previews)
+    images: [
+      {
+        url: "https://res.cloudinary.com/dxvpm6xhq/image/upload/v1779984329/vvlogo-updated_tzg7bh.png",
+        width: 1200,
+        height: 630,
+        alt: "Visual Verse Studios",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Visual Verse Studios - Portfolio",
+    description: "Creative studio crafting cinematic visual narratives.",
+    // creator handle (optional) - replace with your Twitter handle
+    creator: "@visualverse",
   },
 };
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useGSAP, gsap } from "@/hooks/useGSAP";
 import { projects } from "@/data/projects";
 import Image from "next/image";
@@ -33,15 +34,155 @@ const CARD_GAP = 3;           // minimal gap between cards
 // The center card will be pushed BACK by this amount
 const CENTER_DEPTH = -250;    // negative Z = deeper into screen
 
+function MobileWorksCard({ project }: { project: (typeof projects)[number] }) {
+  const [playing, setPlaying] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  const hasVideo = !!(project.videoHover || project.youtubeId);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (playing) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [playing]);
+
+  return (
+    <>
+      <article
+        className="shrink-0 snap-center group"
+        style={{ width: "78vw", maxWidth: "320px" }}
+        onClick={() => hasVideo && setPlaying(true)}
+      >
+        <div className={`relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#0a0a0a] shadow-[0_30px_60px_rgba(0,0,0,0.6)] transition-transform duration-500 hover:scale-[1.02] ${hasVideo ? "cursor-pointer" : ""}`}>
+
+          {/* Premium Inner glass bezel */}
+          <div className="absolute inset-0 z-30 pointer-events-none rounded-[2rem] shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]" />
+
+          {/* Play button overlay */}
+          {hasVideo && (
+            <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.15)]">
+                <svg className="w-6 h-6 text-white translate-x-0.5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            </div>
+          )}
+
+          {/* Seamless Image Area */}
+          <div className="relative z-10 w-full bg-black overflow-hidden" style={{ aspectRatio: "4 / 4.5" }}>
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              sizes="(max-width: 768px) 82vw, 340px"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+              loading="lazy"
+            />
+            {/* Gradient fade to seamless black at the bottom */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-[#0a0a0a] pointer-events-none" />
+          </div>
+
+          {/* Text Area perfectly blended */}
+          <div className="relative z-20 px-6 pb-7 pt-1">
+            <p className="font-label text-[10px] tracking-[0.25em] uppercase text-white/50 mb-1.5 font-medium">
+              {project.subtitle}
+            </p>
+            <h3 className="font-headline text-[1.65rem] leading-[1.05] text-white tracking-tight">
+              {project.title}
+            </h3>
+          </div>
+        </div>
+      </article>
+
+      {/* Fullscreen Video Modal using Portal */}
+      {mounted && playing && typeof window !== "undefined" && createPortal(
+        <div
+          className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/95 backdrop-blur-md px-4 pt-24 pb-6"
+          onClick={() => setPlaying(false)}
+        >
+          {/* Close button */}
+          <button
+            className="absolute top-5 right-5 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-all duration-200"
+            onClick={() => setPlaying(false)}
+            aria-label="Close"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+
+          <div
+            className="w-full max-w-2xl rounded-2xl overflow-hidden bg-black shadow-2xl ring-1 ring-white/10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {project.youtubeId ? (
+              <div className="relative w-full" style={{ aspectRatio: "16/9" }}>
+                <iframe
+                  src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+                  title={project.title}
+                  allow="autoplay; encrypted-media; fullscreen"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full border-0"
+                />
+              </div>
+            ) : project.videoHover ? (
+              <video
+                src={project.videoHover}
+                autoPlay
+                controls
+                playsInline
+                className="w-full max-h-[80vh] object-contain bg-black"
+              />
+            ) : null}
+            <div className="px-5 py-4 bg-[#0a0a0a]">
+              <p className="font-label text-[10px] tracking-[0.25em] uppercase text-white/50 mb-1">{project.subtitle}</p>
+              <h3 className="font-headline text-xl text-white">{project.title}</h3>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+    </>
+  );
+}
+
 export default function Works() {
   const sectionRef = useRef<HTMLElement>(null);
   const carouselAreaRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const mobileScrollRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const activeRef = useRef(0);
   const currentIndex = useRef(0);      // integer card index (wraps)
   const isAnimating = useRef(false);   // prevent scroll spam
+
+  const scrollMobile = useCallback((direction: -1 | 1) => {
+    const el = mobileScrollRef.current;
+    if (!el) return;
+
+    const card = el.querySelector("article");
+    const cardWidth = card ? card.getBoundingClientRect().width : 320;
+    const gap = 16;
+
+    el.scrollBy({
+      left: direction * (cardWidth + gap),
+      behavior: "smooth",
+    });
+  }, []);
 
   /* ── Position cards on INNER cylinder ── */
   const layoutCards = useCallback((centerIdx: number, dur = 0.5) => {
@@ -68,6 +209,7 @@ export default function Works() {
 
       // Side cards tilt INWARD toward center
       const rotateY = -angle * 0.7;
+      card.style.setProperty("--card-tilt", `${rotateY}deg`);
 
       const zIndex = absOffset < 0.5
         ? 100
@@ -294,13 +436,61 @@ export default function Works() {
           }}
         />
 
+        {/* ── Mobile Swipe Carousel ─────────────────────── */}
+        <div className="relative z-10 pt-12 pb-8 lg:hidden">
+          <div className="container-wide">
+            <div className="mb-5 flex items-end justify-between gap-4">
+              <div>
+                <p className="font-label text-[10px] tracking-[0.28em] uppercase text-white/45">
+                  Project Gallery
+                </p>
+                <h2 className="mt-1 font-headline text-4xl leading-[0.9] text-white">
+                  Swipe to explore
+                </h2>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => scrollMobile(-1)}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/30 text-white transition-colors hover:bg-white/10"
+                  aria-label="Scroll works left"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                    <path d="M15 18l-6-6 6-6" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollMobile(1)}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/30 text-white transition-colors hover:bg-white/10"
+                  aria-label="Scroll works right"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div
+              ref={mobileScrollRef}
+              className="flex gap-4 overflow-x-auto pb-3 -mx-1 px-1 snap-x snap-mandatory"
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}
+            >
+              {projects.map((project) => (
+                <MobileWorksCard key={project.id} project={project} />
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* ── Inner Carousel Stage ─────────────────────── */}
-        <div className="relative z-10 pt-16 sm:pt-24 md:pt-32 pb-4">
+        <div className="relative z-10 hidden pt-16 sm:pt-24 lg:block lg:pt-32 pb-4">
           {/* PROJECT GALLERY heading with decorative lines */}
           <div className="flex items-center justify-center gap-4 sm:gap-6 mb-2 sm:mb-3 project-gallery-heading">
             {/* Left decorative line */}
             <div
-              className="gallery-line-left h-px flex-shrink-0"
+              className="gallery-line-left h-px shrink-0"
               style={{
                 width: "clamp(40px, 8vw, 120px)",
                 background: "linear-gradient(to right, transparent, rgba(255,255,255,0.4))",
@@ -343,7 +533,7 @@ export default function Works() {
             />
             {/* Right decorative line */}
             <div
-              className="gallery-line-right h-px flex-shrink-0"
+              className="gallery-line-right h-px shrink-0"
               style={{
                 width: "clamp(40px, 8vw, 120px)",
                 background: "linear-gradient(to left, transparent, rgba(255,255,255,0.4))",
@@ -352,7 +542,7 @@ export default function Works() {
           </div>
 
           {/* Instruction text */}
-          <div className="text-center mb-8 sm:mb-10 gallery-instruction" style={{ opacity: 0 }}>
+          <div className="hidden text-center mb-8 sm:mb-10 gallery-instruction lg:block" style={{ opacity: 0 }}>
             <span className="font-accent text-xs sm:text-sm text-white/50 tracking-wide" style={{ fontStyle: "italic" }}>
               Hover the cursor over the tiles to play.
             </span>
@@ -393,7 +583,7 @@ export default function Works() {
                 >
                   {/* ── Card face ── */}
                   <div
-                    className="card-face relative w-full h-full rounded-lg overflow-hidden group"
+                    className="card-face relative w-full h-full rounded-none overflow-hidden group border border-white/15 bg-[#050505]"
                     style={{
                       boxShadow: "none",
                       transition: "box-shadow 0.8s ease",
@@ -446,6 +636,8 @@ export default function Works() {
                       }
                     }}
                   >
+                    <div className="absolute inset-0 z-20 pointer-events-none border border-white/10 opacity-50 mix-blend-overlay" />
+
                     {/* Static thumbnail (only when no video and no youtube) */}
                     {!project.videoHover && !project.youtubeId && (
                       <Image
@@ -488,7 +680,10 @@ export default function Works() {
                       }}
                     />
                     {/* Project title */}
-                    <div className="absolute bottom-3 left-3 right-3">
+                    <div
+                      className="absolute bottom-3 left-3 right-3"
+                      style={{ transform: "translateZ(24px) rotateY(calc(var(--card-tilt) * -1))" }}
+                    >
                       <span
                         className="font-headline text-white text-[10px] tracking-[0.14em] uppercase opacity-90"
                       >
@@ -546,12 +741,12 @@ export default function Works() {
 
         {/* ── Info Bar ──────────────────────────────────── */}
         <div
-          className="works-info-bar relative z-10 container-wide pb-12 sm:pb-16 md:pb-24"
+          className="works-info-bar relative z-10 container-wide pb-12 sm:pb-16 lg:pb-24 hidden lg:block"
           style={{ opacity: 0 }}
         >
           <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 md:gap-12 border-t border-white/10 pt-8">
             {/* Left — Counter */}
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <div className="flex items-baseline gap-1">
                 <span
                   className="font-headline leading-none text-white"
@@ -609,7 +804,7 @@ export default function Works() {
           <div className="mt-6 flex items-center justify-center gap-3">
             <div className="relative h-px bg-white/8 overflow-hidden rounded-full" style={{ width: "140px" }}>
               <div
-                className="absolute top-0 left-0 h-full bg-[#E32626] rounded-full transition-all duration-500 ease-out"
+                className="absolute top-0 left-0 h-full bg-accent rounded-full transition-all duration-500 ease-out"
                 style={{ width: `${((activeIndex + 1) / TOTAL) * 100}%` }}
               />
             </div>

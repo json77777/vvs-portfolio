@@ -202,7 +202,9 @@ export default function Footer() {
                       </svg>
                     </a>
                     <a
-                      href="#"
+                      href="https://www.instagram.com/visualversestd.official?igsh=Y254dTF1ZmI3eGxi"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="group flex items-center justify-end gap-2 text-ink hover:text-[#E32626] transition-all duration-300 whitespace-nowrap"
                     >
                       <span className="font-accent text-xs md:text-sm tracking-widest uppercase">Instagram</span>

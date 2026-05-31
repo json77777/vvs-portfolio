@@ -155,70 +155,72 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
         className="absolute inset-0 flex flex-col items-center justify-center"
         style={{ zIndex: 2 }}
       >
-        {/* Main name */}
-        <div
-          className="flex items-center gap-[0.02em] overflow-hidden"
-          style={{ perspective: "600px" }}
-        >
-          {nameChars.map((char, i) => (
-            <span
-              key={i}
-              className="loader-name-char inline-block font-headline text-white"
-              style={{
-                fontSize: "clamp(2rem, 8vw, 8rem)",
-                letterSpacing: "-0.04em",
-                lineHeight: 1,
-                transformOrigin: "center bottom",
-                willChange: "transform",
-              }}
-            >
-              {char === " " ? "\u00A0" : char}
-            </span>
-          ))}
-        </div>
-
-        {/* Tagline / Footer */}
-        <span
-          className="loader-tagline font-headline mt-4 tracking-widest text-white/80"
-          style={{
-            fontSize: "clamp(1rem, 3vw, 2rem)",
-            letterSpacing: "0.5em",
-            opacity: 0,
-            textTransform: "uppercase"
-          }}
-        >
-          STUDIOS
-        </span>
-
-        {/* Progress bar */}
-        <div className="loader-progress-wrap relative mt-10 w-[200px] md:w-[280px]">
+        <div className="flex flex-col items-center w-max max-w-full px-4">
+          {/* Main name */}
           <div
-            className="h-[1px] w-full"
-            style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
-          />
-          <div
-            className="loader-progress-bar absolute top-0 left-0 h-[1px] w-full"
+            className="flex items-center gap-[0.02em] overflow-hidden"
+            style={{ perspective: "600px" }}
+          >
+            {nameChars.map((char, i) => (
+              <span
+                key={i}
+                className="loader-name-char inline-block font-headline text-white"
+                style={{
+                  fontSize: "clamp(2rem, 8vw, 8rem)",
+                  letterSpacing: "-0.04em",
+                  lineHeight: 1,
+                  transformOrigin: "center bottom",
+                  willChange: "transform",
+                }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </span>
+            ))}
+          </div>
+
+          {/* Tagline / Footer */}
+          <span
+            className="loader-tagline font-headline mt-4 tracking-widest text-white/80"
             style={{
-              backgroundColor: "rgba(255,255,255,0.6)",
-              transformOrigin: "left center",
-              transform: "scaleX(0)",
+              fontSize: "clamp(1rem, 3vw, 2rem)",
+              letterSpacing: "0.5em",
+              opacity: 0,
+              textTransform: "uppercase"
             }}
-          />
-        </div>
+          >
+            STUDIOS
+          </span>
 
-        {/* Counter */}
-        <span
-          ref={counterRef}
-          className="loader-counter font-headline mt-4"
-          style={{
-            fontSize: "clamp(0.7rem, 1.5vw, 0.9rem)",
-            letterSpacing: "0.2em",
-            color: "rgba(255,255,255,0.4)",
-            opacity: 0,
-          }}
-        >
-          {String(count).padStart(3, "0")}
-        </span>
+          {/* Progress bar */}
+          <div className="loader-progress-wrap relative mt-10 w-full">
+            <div
+              className="h-[1px] w-full"
+              style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
+            />
+            <div
+              className="loader-progress-bar absolute top-0 left-0 h-[1px] w-full"
+              style={{
+                backgroundColor: "rgba(255,255,255,0.6)",
+                transformOrigin: "left center",
+                transform: "scaleX(0)",
+              }}
+            />
+          </div>
+
+          {/* Counter */}
+          <span
+            ref={counterRef}
+            className="loader-counter font-headline mt-4"
+            style={{
+              fontSize: "clamp(0.7rem, 1.5vw, 0.9rem)",
+              letterSpacing: "0.2em",
+              color: "rgba(255,255,255,0.4)",
+              opacity: 0,
+            }}
+          >
+            {String(count).padStart(3, "0")}
+          </span>
+        </div>
       </div>
     </div>
   );

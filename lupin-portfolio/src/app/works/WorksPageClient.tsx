@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useGSAP, gsap } from "@/hooks/useGSAP";
 import { worksProjects } from "@/data/projects";
 import type { Project } from "@/data/projects";
@@ -84,7 +85,14 @@ function WorksCard({
         onMouseMove={isVideo ? handleMouseMove : undefined}
         onMouseLeave={isVideo ? handleMouseLeave : undefined}
       >
-        <div className={`relative ${aspectClass} rounded-sm overflow-hidden bg-surface`}>
+        <div 
+          className={`relative ${aspectClass} rounded-none overflow-hidden bg-[#050505] shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10`}
+          style={{
+            boxShadow: "0 0 0 1px rgba(255,255,255,0.05), 0 10px 40px rgba(0,0,0,0.5)"
+          }}
+        >
+          {/* Subtle inner glass/metallic reflection line */}
+          <div className="absolute inset-0 z-20 pointer-events-none border border-white/10 opacity-50 mix-blend-overlay" />
           {isVideo && project.youtubeId ? (
             <iframe
               src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${project.youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
@@ -112,20 +120,22 @@ function WorksCard({
             />
           )}
           
-          {/* Full scale button for long form edits & graphic design */}
-          {(isLongForm || isGraphicDesign) && onOpenFullScreen && (
+          {/* Full scale button for all projects */}
+          {onOpenFullScreen && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
                 onOpenFullScreen(project);
               }}
-              className="absolute bottom-4 right-4 z-10 p-2.5 bg-black/40 hover:bg-black/80 rounded-full text-white backdrop-blur-sm transition-all duration-300 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0"
+              className="absolute inset-0 z-10 w-full h-full cursor-pointer focus:outline-none"
               aria-label="View Full Screen"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
-              </svg>
+              <div className="absolute bottom-4 right-4 p-2.5 bg-black/40 hover:bg-black/80 rounded-full text-white backdrop-blur-sm transition-all duration-300 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+                </svg>
+              </div>
             </button>
           )}
         </div>
@@ -138,6 +148,7 @@ export default function WorksPageClient() {
   const pageRef = useRef<HTMLDivElement>(null);
   const [activeCategory, setActiveCategory] = useState("Long Form Edits");
   const [fullScreenProject, setFullScreenProject] = useState<Project | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   /* Each category maps to its own internal tag — completely independent */
   const categoryMap: Record<string, string> = {
@@ -147,9 +158,27 @@ export default function WorksPageClient() {
     "SaaS Edits": "SaaS",
   };
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const filteredProjects = worksProjects.filter(
     (p) => p.category === categoryMap[activeCategory]
   );
+
+  useEffect(() => {
+    if (fullScreenProject) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [fullScreenProject]);
 
   useGSAP(() => {
     if (!pageRef.current) return;
@@ -186,7 +215,7 @@ export default function WorksPageClient() {
     <div ref={pageRef}>
       <section className="pt-32 pb-20 md:pt-40 md:pb-32 bg-bg min-h-screen">
         <div className="container-wide">
-          <div className="mb-16 md:mb-24">
+          <div className="mb-12 md:mb-24 flex flex-col gap-8 md:gap-12">
             <h1
               className="works-page-title font-headline text-ink leading-[0.85]"
               style={{
@@ -200,11 +229,49 @@ export default function WorksPageClient() {
                 ({worksProjects.length})
               </sup>
             </h1>
+
+            {/* Mobile Category Navbar */}
+            <div 
+              className="flex lg:hidden overflow-x-auto gap-3 pb-2 -mx-4 px-4 sm:-mx-6 sm:px-6 snap-x"
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}
+            >
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`works-category-filter shrink-0 snap-start px-6 py-2.5 rounded-full border transition-all duration-300 ${
+                    activeCategory === cat
+                      ? "border-white bg-white text-black"
+                      : "border-white/20 text-white/70 hover:text-white hover:border-white/50 bg-black/20"
+                  }`}
+                  style={{
+                    fontFamily: "var(--font-headline)",
+                    fontSize: "0.95rem",
+                    letterSpacing: "0.05em",
+                    textTransform: "uppercase"
+                  }}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-0">
-            {/* Left column */}
-            <div className="lg:w-[30%] lg:pr-6 space-y-8">
+            {/* Mobile Unified Column */}
+            <div className="lg:hidden space-y-8 w-full">
+              {filteredProjects.map((project) => (
+                <WorksCard 
+                  key={project.id} 
+                  project={project} 
+                  activeCategory={activeCategory} 
+                  onOpenFullScreen={setFullScreenProject}
+                />
+              ))}
+            </div>
+
+            {/* Desktop Left column */}
+            <div className="hidden lg:block lg:w-[30%] lg:pr-6 space-y-8">
               {filteredProjects
                 .filter((_, i) => i % 2 === 0)
                 .map((project) => (
@@ -217,8 +284,8 @@ export default function WorksPageClient() {
                 ))}
             </div>
 
-            {/* Center filters */}
-            <div className="lg:w-[40%] lg:px-8 flex flex-col items-center">
+            {/* Desktop Center filters */}
+            <div className="hidden lg:flex lg:w-[40%] lg:px-8 flex-col items-center">
               <div className="lg:sticky lg:top-32 space-y-6 w-full mt-10">
                 {categories.map((cat) => (
                   <div key={cat} className="works-category-filter w-full">
@@ -247,8 +314,8 @@ export default function WorksPageClient() {
               </div>
             </div>
 
-            {/* Right column */}
-            <div className="lg:w-[30%] lg:pl-6 space-y-8 lg:mt-24">
+            {/* Desktop Right column */}
+            <div className="hidden lg:block lg:w-[30%] lg:pl-6 space-y-8 lg:mt-24">
               {filteredProjects
                 .filter((_, i) => i % 2 === 1)
                 .map((project) => (
@@ -265,9 +332,9 @@ export default function WorksPageClient() {
       </section>
       <Footer />
 
-      {/* Full Screen Modal */}
-      {fullScreenProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-4 md:p-12">
+      {/* Full Screen Modal using Portal */}
+      {mounted && fullScreenProject && typeof window !== "undefined" && createPortal(
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/95 backdrop-blur-md p-4 md:p-12">
           {/* Close background layer */}
           <div 
             className="absolute inset-0 z-0" 
@@ -304,13 +371,15 @@ export default function WorksPageClient() {
             ) : (
               <video
                 src={fullScreenProject.videoHover || fullScreenProject.image}
-                controls
                 autoPlay
+                controls
+                playsInline
                 className="w-full h-full object-contain"
               />
             )}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Sitemap: /sitemap.xml
+# If you have a preferred host, replace the Sitemap entry with its full URL, e.g.
+# Sitemap: https://your-domain.com/sitemap.xml

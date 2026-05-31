@@ -22,7 +22,7 @@ export const projects: Project[] = [
   {
     id: "alice-borderland-rei",
     title: "ALICE IN BORDERLAND",
-    subtitle: "Anime Edit",
+    subtitle: "Movie Edit",
     category: "Creative",
     image: "https://res.cloudinary.com/dxvpm6xhq/video/upload/v1778441272/Rei_n4bw7t.jpg",
     color: "#2a2a3d",
@@ -31,7 +31,7 @@ export const projects: Project[] = [
   {
     id: "memelander",
     title: "MEMELANDER",
-    subtitle: "Meme Edit",
+    subtitle: "Movie Edit",
     category: "Creative",
     image: "https://res.cloudinary.com/dxvpm6xhq/video/upload/v1778441695/Memelander_eaxs5a.jpg",
     color: "#3d3228",
@@ -49,7 +49,7 @@ export const projects: Project[] = [
   {
     id: "sadie-sink",
     title: "SADIE SINK",
-    subtitle: "Celebrity Edit",
+    subtitle: "Movie Edit",
     category: "Creative",
     image: "https://res.cloudinary.com/dxvpm6xhq/video/upload/v1778481661/Sadie_Sink_pn3oj6.jpg",
     color: "#2a3d2d",

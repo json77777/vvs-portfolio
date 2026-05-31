@@ -1,0 +1,439 @@
+{
+  "name": "PortFolio",
+  "path": "c:\\Users\\banur\\OneDrive\\Documents\\webdev\\PortFolio",
+  "type": "directory",
+  "children": [
+    {
+      "name": "color-palete",
+      "type": "folder",
+      "icon": "📁",
+      "children": [
+        {
+          "name": "image.png",
+          "type": "file",
+          "icon": "🖼️"
+        }
+      ]
+    },
+    {
+      "name": "fonts",
+      "type": "folder",
+      "icon": "📁",
+      "children": [
+        {
+          "name": "DeanGothicCMP-Book.316536.ttf",
+          "type": "file",
+          "icon": "📄"
+        },
+        {
+          "name": "Silvana-LightItalic.09509d.ttf",
+          "type": "file",
+          "icon": "📄"
+        },
+        {
+          "name": "Silvana-RegularItalic.0eb764.ttf",
+          "type": "file",
+          "icon": "📄"
+        }
+      ]
+    },
+    {
+      "name": "lupin-portfolio",
+      "type": "folder",
+      "icon": "📁",
+      "children": [
+        {
+          "name": "public",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "fonts",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "DeanGothicCMP-Book.316536.ttf",
+                  "type": "file",
+                  "icon": "📄"
+                },
+                {
+                  "name": "Silvana-LightItalic.09509d.ttf",
+                  "type": "file",
+                  "icon": "📄"
+                },
+                {
+                  "name": "Silvana-RegularItalic.0eb764.ttf",
+                  "type": "file",
+                  "icon": "📄"
+                }
+              ]
+            },
+            {
+              "name": "images",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "project-1.png",
+                  "type": "file",
+                  "icon": "🖼️"
+                },
+                {
+                  "name": "project-2.png",
+                  "type": "file",
+                  "icon": "🖼️"
+                },
+                {
+                  "name": "project-3.png",
+                  "type": "file",
+                  "icon": "🖼️"
+                },
+                {
+                  "name": "project-4.png",
+                  "type": "file",
+                  "icon": "🖼️"
+                },
+                {
+                  "name": "project-5.png",
+                  "type": "file",
+                  "icon": "🖼️"
+                },
+                {
+                  "name": "project-6.png",
+                  "type": "file",
+                  "icon": "🖼️"
+                }
+              ]
+            },
+            {
+              "name": "file.svg",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "globe.svg",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "instagram.png",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "next.svg",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "robots.txt",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "sitemap.xml",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "vercel.svg",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "window.svg",
+              "type": "file",
+              "icon": "🖼️"
+            }
+          ]
+        },
+        {
+          "name": "src",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "app",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "about",
+                  "type": "folder",
+                  "icon": "📁",
+                  "children": [
+                    {
+                      "name": "AboutPageClient.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "page.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    }
+                  ]
+                },
+                {
+                  "name": "works",
+                  "type": "folder",
+                  "icon": "📁",
+                  "children": [
+                    {
+                      "name": "WorksPageClient.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "page.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    }
+                  ]
+                },
+                {
+                  "name": "favicon.ico",
+                  "type": "file",
+                  "icon": "📄"
+                },
+                {
+                  "name": "globals.css",
+                  "type": "file",
+                  "icon": "🎨"
+                },
+                {
+                  "name": "icon.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "layout.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "page.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                }
+              ]
+            },
+            {
+              "name": "components",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "About.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "CTA.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "Footer.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "GeometricLines.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "Hero.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "Loader.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "LoaderWrapper.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "MagneticButton.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "Navigation.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "OptimizedVideo.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "Services.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "SmoothScroll.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "Works.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                }
+              ]
+            },
+            {
+              "name": "data",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "projects.ts",
+                  "type": "file",
+                  "icon": "📘"
+                }
+              ]
+            },
+            {
+              "name": "hooks",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "useGSAP.ts",
+                  "type": "file",
+                  "icon": "📘"
+                },
+                {
+                  "name": "useIsomorphicLayoutEffect.ts",
+                  "type": "file",
+                  "icon": "📘"
+                }
+              ]
+            },
+            {
+              "name": "lib",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "animations.ts",
+                  "type": "file",
+                  "icon": "📘"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": ".gitignore",
+          "type": "file",
+          "icon": "📁"
+        },
+        {
+          "name": "AGENTS.md",
+          "type": "file",
+          "icon": "📝"
+        },
+        {
+          "name": "CLAUDE.md",
+          "type": "file",
+          "icon": "📝"
+        },
+        {
+          "name": "README.md",
+          "type": "file",
+          "icon": "📝"
+        },
+        {
+          "name": "eslint.config.mjs",
+          "type": "file",
+          "icon": "📄"
+        },
+        {
+          "name": "next-env.d.ts",
+          "type": "file",
+          "icon": "📘"
+        },
+        {
+          "name": "next.config.ts",
+          "type": "file",
+          "icon": "📘"
+        },
+        {
+          "name": "package-lock.json",
+          "type": "file",
+          "icon": "⚙️"
+        },
+        {
+          "name": "package.json",
+          "type": "file",
+          "icon": "📦"
+        },
+        {
+          "name": "postcss.config.mjs",
+          "type": "file",
+          "icon": "📄"
+        },
+        {
+          "name": "tsconfig.json",
+          "type": "file",
+          "icon": "⚙️"
+        }
+      ]
+    },
+    {
+      "name": "refereneces",
+      "type": "folder",
+      "icon": "📁",
+      "children": [
+        {
+          "name": "2026-04-08 13-25-57.mp4",
+          "type": "file",
+          "icon": "📄"
+        },
+        {
+          "name": "2026-04-08 14-53-30.mp4",
+          "type": "file",
+          "icon": "📄"
+        },
+        {
+          "name": "2026-04-25 16-17-05.mp4",
+          "type": "file",
+          "icon": "📄"
+        },
+        {
+          "name": "inspo.pdf",
+          "type": "file",
+          "icon": "📕"
+        }
+      ]
+    },
+    {
+      "name": "implementation_plan.md",
+      "type": "file",
+      "icon": "📝"
+    },
+    {
+      "name": "implementation_plan.md.resolved",
+      "type": "file",
+      "icon": "📄"
+    }
+  ],
+  "metadata": {
+    "generated": "2026-05-31T14:49:54.034Z",
+    "generator": "FileTree Pro Extension",
+    "version": "0.2.0",
+    "showIcons": true,
+    "maxDepth": 10
+  }
+}
