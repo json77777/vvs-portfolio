@@ -53,7 +53,7 @@ export default function CTA() {
     <section
       ref={sectionRef}
       id="contact"
-      className="relative py-24 sm:py-32 md:py-48 bg-bg overflow-hidden"
+      className="relative z-20 py-24 sm:py-32 md:py-48 bg-bg"
     >
       {/* Decorative geometric lines */}
       <GeometricLines variant="cta" />

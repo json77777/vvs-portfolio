@@ -324,7 +324,7 @@ export default function Navigation() {
               className="text-[10px] uppercase tracking-[0.18em] text-white/40 font-medium"
               style={{ fontFamily: "var(--font-dm-sans, 'DM Sans', sans-serif)" }}
             >
-              Contact
+              SOCIALS
             </span>
             <a
               href="mailto:visualversestudiosofficial@gmail.com"
