@@ -16,7 +16,7 @@
 
 <br/>
 
-[🌐 Live Demo](#) · [📸 Instagram](https://www.instagram.com/visualversestd.official) · [📬 Hire Me](#contact)
+[🌐 Live Demo](https://vvs-portfolio.vercel.app/) · [📸 Instagram](https://www.instagram.com/visualversestd.official) · [📬 Hire Me](#contact)
 
 </div>
 
@@ -224,7 +224,7 @@ Available for freelance projects and creative collaborations:
 
 **📸 Instagram:** [@visualversestd.official](https://www.instagram.com/visualversestd.official)
 **📩 Email:** *(Add your email here)*
-**🔗 Portfolio:** *(Add your live URL here)*
+**🔗 Portfolio:** https://vvs-portfolio.vercel.app/
 
 ---
 
