@@ -158,7 +158,7 @@ export default function Footer() {
                   Reel
                 </div>
                 <div className="absolute bottom-3 right-4 font-headline text-2xl text-ink/15">
-                  2025
+                  2026
                 </div>
               </div>
             </div>
