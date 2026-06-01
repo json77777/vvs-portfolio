@@ -303,7 +303,7 @@ export default function AboutPageClient() {
                 </svg>
                 <span className="text-sm font-label tracking-widest text-ink uppercase">Discord</span>
               </a>
-              <a href="https://www.instagram.com/visualversestudios" target="_blank" rel="noopener noreferrer" onClick={() => setContactDropdownOpen(false)} className="flex items-center gap-3 px-4 py-3 hover:bg-ink/5 transition-all duration-200">
+              <a href="https://www.instagram.com/visualversestudiosofficial?igsh=Y254dTF1ZmI3eGxi" target="_blank" rel="noopener noreferrer" onClick={() => setContactDropdownOpen(false)} className="flex items-center gap-3 px-4 py-3 hover:bg-ink/5 transition-all duration-200">
                 <svg className="w-5 h-5 text-ink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>

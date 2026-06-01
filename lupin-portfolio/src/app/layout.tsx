@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Manrope, Cormorant_Garamond, Syne } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
@@ -42,7 +42,6 @@ export const metadata: Metadata = {
   ],
   metadataBase: new URL("https://example.com"), // replace with your site URL
   authors: [{ name: "Visual Verse Studios", url: "https://example.com" }],
-  themeColor: [{ media: "(prefers-color-scheme: light)", color: "#ffffff" }, { media: "(prefers-color-scheme: dark)", color: "#000000" }],
   robots: {
     index: true,
     follow: true,
@@ -77,6 +76,17 @@ export const metadata: Metadata = {
     // creator handle (optional) - replace with your Twitter handle
     creator: "@visualverse",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
 };
 
 export default function RootLayout({

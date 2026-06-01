@@ -46,12 +46,12 @@ export default function Navigation() {
   return (
     <header
       ref={headerRef}
-      className="fixed left-1/2 top-4 md:top-6 z-[100] w-full max-w-5xl -translate-x-1/2 px-4 md:px-8"
+      className="fixed left-1/2 top-3 md:top-5 z-100 w-full max-w-5xl -translate-x-1/2 px-3 md:px-8"
       style={{ opacity: 0 }}
     >
       {/* ── Floating Glass Pill ─────────────────────────────── */}
       <nav
-        className="flex w-full items-center justify-between rounded-[20px] border border-white/[0.12] px-5 md:px-6 py-3 md:py-3.5"
+        className="flex w-full items-center justify-between rounded-[18px] border border-white/12 px-4 md:px-6 py-2.5 md:py-3"
         style={{
           background: "rgba(255,255,255,0.03)",
           backdropFilter: "blur(40px) saturate(1.8)",
@@ -69,10 +69,10 @@ export default function Navigation() {
           <img
             src="https://res.cloudinary.com/dxvpm6xhq/image/upload/v1779984329/vvlogo-updated_tzg7bh.png"
             alt="Visual Verse logo"
-            className="w-7 h-7 md:w-8 md:h-8 object-contain"
+            className="w-6.5 h-6.5 md:w-8 md:h-8 object-contain"
           />
           <span
-            className="text-white font-extrabold text-base md:text-lg"
+            className="text-white font-extrabold text-sm md:text-lg"
             style={{
               fontFamily: "var(--font-syne)",
               letterSpacing: "-0.04em",
@@ -107,8 +107,8 @@ export default function Navigation() {
                   {/* Glowing underline */}
                   <span
                     className={`absolute inset-x-0 -bottom-1 h-0.5 bg-white rounded-full transition-all duration-300 ${isActive
-                        ? "scale-x-100 opacity-100 shadow-[0_0_8px_rgba(255,255,255,0.6)]"
-                        : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-50 group-hover:shadow-[0_0_8px_rgba(255,255,255,0.4)]"
+                      ? "scale-x-100 opacity-100 shadow-[0_0_8px_rgba(255,255,255,0.6)]"
+                      : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-50 group-hover:shadow-[0_0_8px_rgba(255,255,255,0.4)]"
                       }`}
                   />
                 </Link>
@@ -148,7 +148,7 @@ export default function Navigation() {
             {/* Contact hover dropdown */}
             <div className="absolute left-1/2 top-full z-50 pt-6 w-48 -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 translate-y-2 group-hover/contact:translate-y-0 group-hover/contact:pointer-events-auto group-hover/contact:opacity-100 group-focus-within/contact:pointer-events-auto group-focus-within/contact:opacity-100">
               <div
-                className="rounded-xl border border-white/[0.08] p-2"
+                className="rounded-xl border border-white/8 p-2"
                 style={{
                   background: "rgba(10,10,10,0.95)",
                   backdropFilter: "blur(40px)",
@@ -156,6 +156,18 @@ export default function Navigation() {
                     "0 10px 40px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.03)",
                 }}
               >
+                <a
+                  href="mailto:visualversestudiosofficial@gmail.com"
+                  className="flex items-center justify-between rounded-lg px-4 py-2.5 text-[14px] tracking-normal font-medium text-white/70 hover:bg-white/10 hover:text-white transition-colors"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <img src="/mail.png" alt="" className="w-4 h-4 object-contain brightness-0 invert" />
+                    Mail
+                  </span>
+                  <svg width="8" height="8" viewBox="0 0 12 12" fill="none" className="text-white/40">
+                    <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </a>
                 <a
                   href="https://discord.gg/QVYzq9yy"
                   target="_blank"
@@ -173,7 +185,7 @@ export default function Navigation() {
                   </svg>
                 </a>
                 <a
-                  href="https://www.instagram.com/visualversestd.official?igsh=Y254dTF1ZmI3eGxi"
+                  href="https://www.instagram.com/visualversestudiosofficial?igsh=Y254dTF1ZmI3eGxi"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-between rounded-lg px-4 py-2.5 text-[14px] tracking-normal font-medium text-white/70 hover:bg-white/10 hover:text-white transition-colors"
@@ -195,21 +207,32 @@ export default function Navigation() {
         <div className="flex items-center gap-2 md:gap-3">
           {/* Desktop social icons */}
           <div className="hidden md:flex items-center gap-1.5">
-            <MagneticButton as="div" strength={0.15} className="inline-block">
+            {/* <MagneticButton as="div" strength={0.15} className="inline-block">
               <a
-                href="https://www.instagram.com/visualversestd.official?igsh=Y254dTF1ZmI3eGxi"
+                href="https://www.instagram.com/visualversestudiosofficial?igsh=Y254dTF1ZmI3eGxi"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
                 className="grid h-9 w-9 place-items-center rounded-lg hover:bg-white/10 transition-colors"
               >
-                <img
-                  src="/instagram.png"
-                  alt=""
-                  className="w-[18px] h-[18px] object-contain brightness-0 invert opacity-80 hover:opacity-100 transition-opacity"
-                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-white/80 hover:text-white transition-colors"
+                >
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
               </a>
-            </MagneticButton>
+            </MagneticButton> */}
             <MagneticButton as="div" strength={0.15} className="inline-block">
               <a
                 href="https://www.fiverr.com/visual_verse_/"
@@ -221,7 +244,7 @@ export default function Navigation() {
                 <img
                   src="https://res.cloudinary.com/dxvpm6xhq/image/upload/v1780159034/icons8-fiverr-50_inwqny.png"
                   alt=""
-                  className="w-[18px] h-[18px] object-contain invert opacity-80 hover:opacity-100 transition-opacity"
+                  className="w-4.5 h-4.5 object-contain invert opacity-80 hover:opacity-100 transition-opacity"
                 />
               </a>
             </MagneticButton>
@@ -250,15 +273,15 @@ export default function Navigation() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden flex flex-col justify-center items-center w-9 h-9 rounded-full bg-white/5 border border-white/10 transition-colors hover:bg-white/10"
+            className="md:hidden flex flex-col justify-center items-center w-8.5 h-8.5 rounded-full bg-white/5 border border-white/10 transition-colors hover:bg-white/10"
             aria-label="Toggle menu"
           >
             <div
-              className={`w-3.5 h-[1.5px] bg-white transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[1px]" : "-translate-y-[3px]"
+              className={`w-3.5 h-[1.5px] bg-white transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-px" : "-translate-y-0.75"
                 }`}
             />
             <div
-              className={`w-3.5 h-[1.5px] bg-white transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[0.5px]" : "translate-y-[3px]"
+              className={`w-3.5 h-[1.5px] bg-white transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[0.5px]" : "translate-y-0.75"
                 }`}
             />
           </button>
@@ -267,9 +290,9 @@ export default function Navigation() {
 
       {/* ── Translucent Mobile Drawer ────────────────────────── */}
       <div
-        className={`absolute top-full left-4 right-4 mt-3 p-5 rounded-[20px] border border-white/[0.12] transition-all duration-300 md:hidden ${menuOpen
-            ? "opacity-100 translate-y-0 pointer-events-auto"
-            : "opacity-0 -translate-y-4 pointer-events-none"
+        className={`absolute top-full left-4 right-4 mt-2.5 p-4 rounded-[18px] border border-white/12 transition-all duration-300 md:hidden ${menuOpen
+          ? "opacity-100 translate-y-0 pointer-events-auto"
+          : "opacity-0 -translate-y-4 pointer-events-none"
           }`}
         style={{
           background: "rgba(10,10,10,0.95)",
@@ -304,6 +327,14 @@ export default function Navigation() {
               Contact
             </span>
             <a
+              href="mailto:visualversestudiosofficial@gmail.com"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center gap-3 text-white/60 hover:text-white transition-colors text-[14px]"
+            >
+              <img src="/mail.png" alt="" className="w-4 h-4 object-contain brightness-0 invert" />
+              Mail
+            </a>
+            <a
               href="https://discord.gg/QVYzq9yy"
               target="_blank"
               rel="noopener noreferrer"
@@ -316,13 +347,17 @@ export default function Navigation() {
               Discord
             </a>
             <a
-              href="https://www.instagram.com/visualversestd.official?igsh=Y254dTF1ZmI3eGxi"
+              href="https://www.instagram.com/visualversestudiosofficial?igsh=Y254dTF1ZmI3eGxi"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
               className="flex items-center gap-3 text-white/60 hover:text-white transition-colors text-[14px]"
             >
-              <img src="/instagram.png" alt="" className="w-4 h-4 object-contain brightness-0 invert" />
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
               Instagram
             </a>
             <a

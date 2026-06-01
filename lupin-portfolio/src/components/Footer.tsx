@@ -190,6 +190,16 @@ export default function Footer() {
                     }`}
                   >
                     <a
+                      href="mailto:visualversestudiosofficial@gmail.com"
+                      className="group flex items-center justify-end gap-2 text-ink hover:text-[#E32626] transition-all duration-300 whitespace-nowrap"
+                    >
+                      <span className="font-accent text-xs md:text-sm tracking-widest uppercase">Mail</span>
+                      <svg className="w-3 h-3 md:w-4 md:h-4 transform transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                      </svg>
+                    </a>
+                    <a
                       href="https://discord.gg/QVYzq9yy"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -202,7 +212,7 @@ export default function Footer() {
                       </svg>
                     </a>
                     <a
-                      href="https://www.instagram.com/visualversestd.official?igsh=Y254dTF1ZmI3eGxi"
+                      href="https://www.instagram.com/visualversestudiosofficial?igsh=Y254dTF1ZmI3eGxi"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group flex items-center justify-end gap-2 text-ink hover:text-[#E32626] transition-all duration-300 whitespace-nowrap"

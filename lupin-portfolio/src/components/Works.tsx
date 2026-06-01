@@ -125,11 +125,18 @@ function MobileWorksCard({ project }: { project: (typeof projects)[number] }) {
           </button>
 
           <div
-            className="w-full max-w-2xl rounded-2xl overflow-hidden bg-black shadow-2xl ring-1 ring-white/10"
+            className="w-full max-w-sm sm:max-w-md mx-auto rounded-2xl overflow-hidden bg-black shadow-2xl ring-1 ring-white/10"
             onClick={(e) => e.stopPropagation()}
           >
             {project.youtubeId ? (
-              <div className="relative w-full" style={{ aspectRatio: "16/9" }}>
+              <div 
+                className="relative mx-auto" 
+                style={{ 
+                  width: "100%",
+                  maxHeight: "75vh",
+                  aspectRatio: "9/16" 
+                }}
+              >
                 <iframe
                   src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
                   title={project.title}
@@ -160,6 +167,14 @@ function MobileWorksCard({ project }: { project: (typeof projects)[number] }) {
 }
 
 export default function Works() {
+  const [displayProjects, setDisplayProjects] = useState(projects);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setDisplayProjects([...projects].sort(() => Math.random() - 0.5));
+    setIsMounted(true);
+  }, []);
+
   const sectionRef = useRef<HTMLElement>(null);
   const carouselAreaRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -304,7 +319,7 @@ export default function Works() {
 
   /* ── Entry animation ── */
   useGSAP(() => {
-    if (!sectionRef.current) return;
+    if (!sectionRef.current || !isMounted) return;
 
     const cards = cardsRef.current.filter(Boolean);
     gsap.set(cards, { y: 80, opacity: 0, scale: 0.9 });
@@ -403,7 +418,7 @@ export default function Works() {
       duration: 2,
       ease: "sine.inOut",
     });
-  }, [layoutCards]);
+  }, [layoutCards, isMounted]);
 
   /* ── Click title to jump ── */
   const goTo = (index: number) => {
@@ -477,7 +492,7 @@ export default function Works() {
               className="flex gap-4 overflow-x-auto pb-3 -mx-1 px-1 snap-x snap-mandatory"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}
             >
-              {projects.map((project) => (
+              {displayProjects.map((project) => (
                 <MobileWorksCard key={project.id} project={project} />
               ))}
             </div>
@@ -567,7 +582,7 @@ export default function Works() {
                 height: `${CARD_HEIGHT}px`,
               }}
             >
-              {projects.map((project, i) => (
+              {displayProjects.map((project, i) => (
                 <div
                   key={project.id}
                   ref={(el) => { cardsRef.current[i] = el; }}
@@ -638,16 +653,14 @@ export default function Works() {
                   >
                     <div className="absolute inset-0 z-20 pointer-events-none border border-white/10 opacity-50 mix-blend-overlay" />
 
-                    {/* Static thumbnail (only when no video and no youtube) */}
-                    {!project.videoHover && !project.youtubeId && (
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        sizes="280px"
-                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                      />
-                    )}
+                    {/* Static thumbnail (always show as a placeholder) */}
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      sizes="280px"
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
 
                     {/* Video — paused by default, plays and unmutes on hover */}
                     {project.videoHover && (
@@ -662,14 +675,15 @@ export default function Works() {
 
                     {/* YouTube embed — paused by default, plays and unmutes on hover */}
                     {project.youtubeId && (
-                      <iframe
-                        src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=0&mute=1&loop=1&playlist=${project.youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
-                        title={project.title}
-                        allow="autoplay; encrypted-media"
-                        allowFullScreen
-                        className="absolute inset-0 w-full h-full border-0"
-                        style={{ pointerEvents: "none" }}
-                      />
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=0&mute=1&loop=1&playlist=${project.youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
+                          title={project.title}
+                          allow="autoplay; encrypted-media"
+                          allowFullScreen
+                          className="w-full h-full border-0"
+                        />
+                      </div>
                     )}
 
                     {/* Bottom gradient */}
@@ -706,31 +720,13 @@ export default function Works() {
                     }}
                   >
                     <div className="relative w-full h-full">
-                      {project.videoHover ? (
-                        <video
-                          src={project.videoHover}
-                          loop
-                          muted
-                          playsInline
-                          className="w-full h-full object-cover object-bottom"
-                        />
-                      ) : project.youtubeId ? (
-                        <Image
-                          src={`https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`}
-                          alt=""
-                          fill
-                          sizes="280px"
-                          className="object-cover object-bottom"
-                        />
-                      ) : (
-                        <Image
-                          src={project.image}
-                          alt=""
-                          fill
-                          sizes="280px"
-                          className="object-cover object-bottom"
-                        />
-                      )}
+                      <Image
+                        src={project.image}
+                        alt=""
+                        fill
+                        sizes="280px"
+                        className="object-cover object-bottom"
+                      />
                     </div>
                   </div>
                 </div>
@@ -771,7 +767,7 @@ export default function Works() {
 
             {/* Right — Project title list */}
             <div className="flex flex-wrap md:flex-col items-start md:items-end gap-0.5">
-              {projects.map((project, i) => (
+              {displayProjects.map((project, i) => (
                 <button
                   key={project.id}
                   onClick={() => goTo(i)}

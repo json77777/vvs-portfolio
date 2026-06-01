@@ -180,7 +180,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
 
           {/* Tagline / Footer */}
           <span
-            className="loader-tagline font-headline mt-4 tracking-widest text-white/80"
+            className="loader-tagline font-headline mt-1 tracking-widest text-white/80"
             style={{
               fontSize: "clamp(1rem, 3vw, 2rem)",
               letterSpacing: "0.5em",
@@ -192,7 +192,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
           </span>
 
           {/* Progress bar */}
-          <div className="loader-progress-wrap relative mt-10 w-full">
+          <div className="loader-progress-wrap relative mt-4 w-full">
             <div
               className="h-[1px] w-full"
               style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
@@ -210,7 +210,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
           {/* Counter */}
           <span
             ref={counterRef}
-            className="loader-counter font-headline mt-4"
+            className="loader-counter font-headline mt-2"
             style={{
               fontSize: "clamp(0.7rem, 1.5vw, 0.9rem)",
               letterSpacing: "0.2em",

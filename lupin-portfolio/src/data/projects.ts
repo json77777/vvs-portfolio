@@ -16,8 +16,8 @@ export const projects: Project[] = [
     subtitle: "Movie Edit",
     category: "Design",
     image: "https://res.cloudinary.com/dxvpm6xhq/video/upload/v1778427031/TASM_Once_Again_prob3_zvfh12.jpg",
+    youtubeId: "YUClJjFW0tg",
     color: "#2a2a2a",
-    videoHover: "https://res.cloudinary.com/dxvpm6xhq/video/upload/v1778427031/TASM_Once_Again_prob3_zvfh12.mp4",
   },
   {
     id: "alice-borderland-rei",
@@ -25,8 +25,8 @@ export const projects: Project[] = [
     subtitle: "Movie Edit",
     category: "Creative",
     image: "https://res.cloudinary.com/dxvpm6xhq/video/upload/v1778441272/Rei_n4bw7t.jpg",
+    youtubeId: "_28fwPRG55E",
     color: "#2a2a3d",
-    videoHover: "https://res.cloudinary.com/dxvpm6xhq/video/upload/v1778441272/Rei_n4bw7t.mp4",
   },
   {
     id: "memelander",
@@ -34,8 +34,8 @@ export const projects: Project[] = [
     subtitle: "Movie Edit",
     category: "Creative",
     image: "https://res.cloudinary.com/dxvpm6xhq/video/upload/v1778441695/Memelander_eaxs5a.jpg",
+    youtubeId: "xthRMLQ3qJc",
     color: "#3d3228",
-    videoHover: "https://res.cloudinary.com/dxvpm6xhq/video/upload/v1778441695/Memelander_eaxs5a.mp4",
   },
   {
     id: "ready-player-one",
@@ -43,8 +43,8 @@ export const projects: Project[] = [
     subtitle: "Movie Edit",
     category: "Creative",
     image: "https://res.cloudinary.com/dxvpm6xhq/video/upload/v1778442270/Ready_Player_One_cvhrpw.jpg",
+    youtubeId: "FQpTIxPwS4I",
     color: "#2a2a3d",
-    videoHover: "https://res.cloudinary.com/dxvpm6xhq/video/upload/v1778442270/Ready_Player_One_cvhrpw.mp4",
   },
   {
     id: "sadie-sink",
@@ -52,8 +52,8 @@ export const projects: Project[] = [
     subtitle: "Movie Edit",
     category: "Creative",
     image: "https://res.cloudinary.com/dxvpm6xhq/video/upload/v1778481661/Sadie_Sink_pn3oj6.jpg",
+    youtubeId: "RTmCKm2NRkY",
     color: "#2a3d2d",
-    videoHover: "https://res.cloudinary.com/dxvpm6xhq/video/upload/v1778481661/Sadie_Sink_pn3oj6.mp4",
   },
   {
     id: "se7en",
@@ -61,8 +61,8 @@ export const projects: Project[] = [
     subtitle: "Movie Edit",
     category: "Creative",
     image: "https://res.cloudinary.com/dxvpm6xhq/video/upload/v1778484866/se7en_tppk8u.jpg",
+    youtubeId: "-2CR3oBh7Ao",
     color: "#3d352a",
-    videoHover: "https://res.cloudinary.com/dxvpm6xhq/video/upload/v1778484866/se7en_tppk8u.mp4",
   },
 ];
 
