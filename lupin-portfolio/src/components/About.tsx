@@ -75,7 +75,7 @@ export default function About() {
                 fontWeight: 300,
               }}
             >
-              {"“At Visual Verse Studios, we are a team of designers and editors driven by a single goal: transforming raw ideas into cinematic reality. Our work is built on the balance between meticulous craft and bold instinct. We don’t just create frames, we create authenticity. This is where brands stop blending in and start rising above the crowd.”".split(" ").map((word, i, arr) => (
+              {"At Visual Verse Studios, we are a team of designers and editors driven by a single goal: transforming raw ideas into cinematic reality. Our work is built on the balance between meticulous craft and bold instinct. We don’t just create frames, we create authenticity. This is where brands stop blending in and start rising above the crowd.".split(" ").map((word, i, arr) => (
                 <span key={i} className="inline">
                   <span className="inline-block transition-all duration-300 hover:scale-[1.15] hover:-translate-y-1 hover:text-white hover:z-10 relative cursor-default origin-center">
                     {word}
