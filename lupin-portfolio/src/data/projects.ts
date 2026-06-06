@@ -225,8 +225,8 @@ export const worksProjects: Project[] = [
     title: "YOUTUBE SHORTS 3",
     subtitle: "Shorts Edit",
     category: "Shorts",
-    image: "https://img.youtube.com/vi/et8uVEpynPs/maxresdefault.jpg",
-    youtubeId: "et8uVEpynPs",
+    image: "https://img.youtube.com/vi/-He0IaIdaLY/maxresdefault.jpg",
+    youtubeId: "-He0IaIdaLY",
     color: "#1a1a1a",
   },
   {
@@ -234,8 +234,8 @@ export const worksProjects: Project[] = [
     title: "YOUTUBE SHORTS 4",
     subtitle: "Shorts Edit",
     category: "Shorts",
-    image: "https://img.youtube.com/vi/Si7RAWwBz3o/maxresdefault.jpg",
-    youtubeId: "Si7RAWwBz3o",
+    image: "https://img.youtube.com/vi/PQlflcwMGNg/maxresdefault.jpg",
+    youtubeId: "PQlflcwMGNg",
     color: "#1a1a1a",
   },
   {
@@ -243,8 +243,8 @@ export const worksProjects: Project[] = [
     title: "YOUTUBE SHORTS 5",
     subtitle: "Shorts Edit",
     category: "Shorts",
-    image: "https://img.youtube.com/vi/I6z-iiO0zls/maxresdefault.jpg",
-    youtubeId: "I6z-iiO0zls",
+    image: "https://img.youtube.com/vi/UA8X-v__vqs/maxresdefault.jpg",
+    youtubeId: "UA8X-v__vqs",
     color: "#1a1a1a",
   },
   {
@@ -252,8 +252,8 @@ export const worksProjects: Project[] = [
     title: "YOUTUBE SHORTS 6",
     subtitle: "Shorts Edit",
     category: "Shorts",
-    image: "https://img.youtube.com/vi/PcCNvowtrqw/maxresdefault.jpg",
-    youtubeId: "PcCNvowtrqw",
+    image: "https://img.youtube.com/vi/pZNiXIIdwUE/maxresdefault.jpg",
+    youtubeId: "pZNiXIIdwUE",
     color: "#1a1a1a",
   },
   {
