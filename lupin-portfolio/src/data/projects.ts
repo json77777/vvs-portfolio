@@ -336,6 +336,15 @@ export const worksProjects: Project[] = [
     image: "https://img.youtube.com/vi/DkBOElzGFuU/maxresdefault.jpg",
     youtubeId: "DkBOElzGFuU",
     color: "#1a1a1a",
+  },
+  {
+    id: "saas-2",
+    title: "SAAS EXPLAINER 2",
+    subtitle: "SaaS Edit",
+    category: "SaaS",
+    image: "https://img.youtube.com/vi/3zaKzZYLH_Y/maxresdefault.jpg",
+    youtubeId: "3zaKzZYLH_Y",
+    color: "#1a1a1a",
   }
 ];
 
